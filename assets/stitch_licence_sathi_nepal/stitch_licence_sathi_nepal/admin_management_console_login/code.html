@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | License Sathi Management Console</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e5e2e1",
+                    "inverse-surface": "#313030",
+                    "primary-fixed": "#ffdad9",
+                    "on-background": "#1c1b1b",
+                    "surface-container": "#f0eded",
+                    "secondary-fixed": "#dae1ff",
+                    "outline": "#916f6e",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#7da0ff",
+                    "on-surface": "#1c1b1b",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary": "#705d00",
+                    "surface": "#fcf9f8",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#eae7e7",
+                    "primary-container": "#dc143c",
+                    "tertiary-container": "#c9a900",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed-dim": "#b3c5ff",
+                    "primary-fixed-dim": "#ffb3b3",
+                    "on-secondary-container": "#003387",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#920022",
+                    "surface-dim": "#dcd9d9",
+                    "surface-container-low": "#f6f3f2",
+                    "on-tertiary-fixed-variant": "#544600",
+                    "surface-tint": "#bf0030",
+                    "outline-variant": "#e6bdbc",
+                    "secondary": "#335ab4",
+                    "surface-bright": "#fcf9f8",
+                    "on-tertiary-container": "#4c3f00",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed-dim": "#e9c400",
+                    "tertiary-fixed": "#ffe16d",
+                    "primary": "#b1002c",
+                    "on-surface-variant": "#5c3f3f",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#221b00",
+                    "inverse-primary": "#ffb3b3",
+                    "on-primary-fixed": "#40000a",
+                    "surface-variant": "#e5e2e1",
+                    "on-primary-container": "#fff1f0",
+                    "background": "#fcf9f8",
+                    "on-secondary-fixed-variant": "#12419b",
+                    "on-secondary-fixed": "#001849"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "20px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .login-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(230, 189, 188, 0.5);
+        }
+        .animate-subtle {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-surface-dim min-h-screen flex flex-col justify-center items-center px-container-margin py-xl relative overflow-hidden">
+<!-- Atmospheric Background Decoration -->
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-40">
+<div class="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Login Container -->
+<div class="w-full max-w-[440px] animate-subtle z-10">
+<!-- Header / Brand Section -->
+<div class="text-center mb-xl">
+<div class="inline-flex items-center justify-center bg-surface-container-highest p-md rounded-xl mb-md">
+<span class="material-symbols-outlined text-primary text-[40px]" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-background tracking-tight">License Sathi</h1>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-[0.1em] mt-xs">Management Console</p>
+</div>
+<!-- Authentication Card -->
+<main class="login-card bg-surface-container-lowest rounded-xl p-lg md:p-xl">
+<!-- Security Badge -->
+<div class="flex justify-center mb-lg">
+<div class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-[11px] font-bold text-on-surface-variant tracking-wider uppercase">Secure Admin Access</span>
+</div>
+</div>
+<form class="space-y-lg" id="loginForm" onsubmit="handleLogin(event)">
+<!-- Email Address Field -->
+<div class="space-y-xs">
+<label class="font-label-md text-on-surface-variant ml-xs" for="email">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant group-focus-within:text-primary transition-colors">alternate_email</span>
+</div>
+<input class="block w-full pl-[52px] pr-md py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" id="email" placeholder="admin@licensesathi.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-xs">
+<div class="flex justify-between items-center px-xs">
+<label class="font-label-md text-on-surface-variant" for="password">Password</label>
+<a class="text-[13px] font-semibold text-secondary hover:text-primary transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant group-focus-within:text-primary transition-colors">lock</span>
+</div>
+<input class="block w-full pl-[52px] pr-[52px] py-md bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" id="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute inset-y-0 right-0 pr-md flex items-center text-on-surface-variant hover:text-on-surface transition-colors" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined" id="passwordToggleIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary transition-all cursor-pointer" id="remember" type="checkbox"/>
+<label class="ml-sm font-body-sm text-on-surface-variant cursor-pointer select-none" for="remember">Keep me signed in</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container hover:bg-primary text-on-primary font-jakarta font-bold text-body-md py-md rounded-lg shadow-sm hover:shadow-md active:scale-[0.98] transition-all flex justify-center items-center gap-sm" type="submit">
+                    Sign In to Console
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Text -->
+<div class="mt-xl pt-lg border-t border-outline-variant text-center">
+<p class="font-body-sm text-on-surface-variant">
+                    Need assistance? <a class="text-secondary font-semibold hover:underline" href="#">Contact Support</a>
+</p>
+</div>
+</main>
+<!-- Global Footer Branding -->
+<footer class="mt-xl text-center">
+<p class="text-[12px] font-medium text-on-surface-variant opacity-60">
+                © 2024 Nepal Driving License Portal. All rights reserved.
+            </p>
+</footer>
+</div>
+<!-- Login Micro-interaction Script -->
+<script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.innerText = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.innerText = 'visibility';
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const btn = event.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            // UI Feedback
+            btn.disabled = true;
+            btn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Authenticating...
+            `;
+            btn.classList.add('opacity-80');
+
+            // Simulate API delay
+            setTimeout(() => {
+                btn.innerHTML = `
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Access Granted
+                `;
+                btn.classList.replace('bg-primary-container', 'bg-tertiary');
+                
+                setTimeout(() => {
+                    alert('Admin authentication successful! Redirecting to dashboard...');
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.classList.replace('bg-tertiary', 'bg-primary-container');
+                    btn.classList.remove('opacity-80');
+                }, 800);
+            }, 1500);
+        }
+    </script>
+</body></html>

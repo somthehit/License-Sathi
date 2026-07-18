@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "210426294158",
+    "firebase_url": "https://license-sathi-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "license-sathi",
+    "storage_bucket": "license-sathi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210426294158:android:d9dca972f2e04543d2bedf",
+        "android_client_info": {
+          "package_name": "com.company.licensesathi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210426294158-pgm2en84umfdmk6o4sllevnpqri7eo0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWIpxpWJfdp-XoKoiJ9EZUlA1XfPpAkXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210426294158-pgm2en84umfdmk6o4sllevnpqri7eo0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Study Material - License Sathi Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#e9c400",
+                        "surface": "#fcf9f8",
+                        "on-tertiary-container": "#4c3f00",
+                        "inverse-primary": "#ffb3b3",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-background": "#1c1b1b",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dcd9d9",
+                        "primary-container": "#dc143c",
+                        "on-surface-variant": "#5c3f3f",
+                        "on-secondary-fixed": "#001849",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#fcf9f8",
+                        "outline-variant": "#e6bdbc",
+                        "primary": "#b1002c",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#fff1f0",
+                        "surface-container-high": "#eae7e7",
+                        "outline": "#916f6e",
+                        "inverse-surface": "#313030",
+                        "primary-fixed-dim": "#ffb3b3",
+                        "surface-tint": "#bf0030",
+                        "secondary": "#335ab4",
+                        "on-tertiary-fixed": "#221b00",
+                        "surface-variant": "#e5e2e1",
+                        "tertiary-container": "#c9a900",
+                        "inverse-on-surface": "#f3f0ef",
+                        "secondary-container": "#7da0ff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b3c5ff",
+                        "tertiary-fixed": "#ffe16d",
+                        "tertiary": "#705d00",
+                        "on-surface": "#1c1b1b",
+                        "on-primary-fixed-variant": "#920022",
+                        "on-primary-fixed": "#40000a",
+                        "background": "#fcf9f8",
+                        "on-secondary-container": "#003387",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#ffdad9",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#12419b",
+                        "surface-container": "#f0eded",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#dae1ff",
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary-fixed-variant": "#544600"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "12px",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab-glow {
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e6bdbc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- SIDE NAVIGATION BAR -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container-highest shadow-sm flex flex-col py-6 px-4 gap-2 z-50">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-sm font-bold text-primary leading-tight">License Sathi</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Admin Console</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-label-md">Question Bank</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold active-tab-glow" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-label-md">Study Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">AD</div>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Admin Profile</p>
+<p class="text-[10px] text-on-surface-variant truncate">admin@licensesathi.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TOP NAVIGATION BAR -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 flex justify-between items-center px-8 bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Search resources, users or materials..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant group-hover:border-primary transition-colors" data-alt="A professional studio portrait of a South Asian male administrative officer in a modern business suit, smiling warmly against a soft-focus office background. The lighting is balanced and clean, conveying a sense of authority and approachability in a corporate light-mode UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALmodNTEDuSp6LNRngdcDh9zXT2lt-2dx2kXJbs1pFvXMw7v6ZCYYC83aW2u3yWzw38-nuRXD-tjVVI8qhKuzQwX9nzFmZ036rytnHL5-T7CH2udynd59Cm1rfYrIEgipFLFUA0VVoFFOWt9R_pzuCl6rz5BdSWZFDMkGJ2NstpmwXjJUALXHO_ml8mRxd61nTWFGR1njVP73jiIBEe9XkKp1MIek-Sn3NG1Yz4H0ZzYJ5HaMV51Nk"/>
+<span class="font-label-md text-on-surface hidden lg:block">Admin Console</span>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-64 pt-24 pb-12 px-8 min-h-screen bg-surface">
+<div class="max-w-5xl mx-auto">
+<!-- HEADER & BREADCRUMBS -->
+<div class="mb-8">
+<nav class="flex items-center gap-2 text-on-surface-variant font-label-md mb-2">
+<a class="hover:text-primary transition-colors" href="#">Study Library</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold">Add New Material</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-md text-display-lg text-on-background">Add New Study Material</h2>
+<p class="text-on-surface-variant font-body-md">Create and publish new educational content for the Nepal Driving License prep.</p>
+</div>
+</div>
+</div>
+<!-- FORM START -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- LEFT COLUMN: CONTENT FORM -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<!-- SECTION 1: TYPE & CATEGORY -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">category</span>
+<h3 class="font-headline-sm text-on-background">Material Type & Category</h3>
+</div>
+<div class="space-y-6">
+<!-- Toggle Tab Group -->
+<div>
+<label class="block font-label-md text-on-surface-variant mb-3">Content Type</label>
+<div class="flex bg-surface-container-high p-1 rounded-lg w-fit">
+<button class="px-6 py-2 rounded-md font-label-md transition-all bg-white shadow-sm text-primary font-bold">Traffic Sign</button>
+<button class="px-6 py-2 rounded-md font-label-md transition-all text-on-surface-variant hover:text-on-background">Road Rule</button>
+<button class="px-6 py-2 rounded-md font-label-md transition-all text-on-surface-variant hover:text-on-background">Vehicle Knowledge</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">Vehicle Category</label>
+<select class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-secondary focus:ring-secondary transition-all">
+<option>A - Motorcycle/Bike</option>
+<option>B - Car/Jeep/Van</option>
+<option>K - Scooter</option>
+<option>All Categories</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">Difficulty Level</label>
+<select class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-secondary focus:ring-secondary transition-all">
+<option>Easy</option>
+<option>Medium</option>
+<option>Hard</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: BILINGUAL CONTENT -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">translate</span>
+<h3 class="font-headline-sm text-on-background">Bilingual Content</h3>
+</div>
+<div class="space-y-8">
+<!-- English Fields -->
+<div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-secondary">
+<p class="font-label-md text-secondary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">language</span> English Version
+                                </p>
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">Material Title</label>
+<input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-secondary transition-all" placeholder="e.g., Speed Limit Ahead (50km/h)" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">Description / Explanation</label>
+<textarea class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-secondary transition-all" placeholder="Explain the rule or sign in detail..." rows="4"></textarea>
+</div>
+</div>
+</div>
+<!-- Nepali Fields -->
+<div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<p class="font-label-md text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">language</span> Nepali Version
+                                </p>
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">सामग्रीको शीर्षक (Title)</label>
+<input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-primary transition-all" placeholder="उदा. गति सीमा ५० कि.मि. प्रति घण्टा" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">विवरण / व्याख्या (Description)</label>
+<textarea class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-primary transition-all" placeholder="नियम वा चिन्हको विस्तृत व्याख्या गर्नुहोस्..." rows="4"></textarea>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: MEDIA & METADATA -->
+<div class="flex flex-col gap-8">
+<!-- SECTION 3: MEDIA UPLOAD -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">image</span>
+<h3 class="font-headline-sm text-on-background">Media Asset</h3>
+</div>
+<div class="space-y-4">
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-surface-container-low transition-all cursor-pointer group">
+<div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">upload</span>
+</div>
+<p class="font-bold text-on-background">Click to Upload Image</p>
+<p class="text-xs text-on-surface-variant mt-1">or drag and drop</p>
+</div>
+<div class="p-4 bg-tertiary-fixed/10 rounded-lg border border-tertiary-container">
+<h4 class="font-label-md text-on-tertiary-container flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm">info</span> Guidelines
+                                </h4>
+<ul class="text-[11px] space-y-1 text-on-tertiary-container list-disc pl-4">
+<li>Use high-resolution PNG or JPG</li>
+<li>Maximum size 2MB</li>
+<li>Preferred aspect ratio 1:1 for signs</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- SECTION 4: RULES & REFERENCES -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant opacity-50 pointer-events-none transition-opacity" id="rules-section">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<h3 class="font-headline-sm text-on-background">Rules & Refs</h3>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">Section ID / Rule No.</label>
+<input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-secondary transition-all" placeholder="e.g., SEC-104A" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-on-surface-variant mb-2">Official DOTM Reference</label>
+<input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:border-secondary transition-all" placeholder="Department of Transport Ref" type="text"/>
+</div>
+</div>
+<p class="mt-4 text-[11px] text-on-surface-variant italic leading-tight">This section is primarily for 'Road Rule' content types.</p>
+</section>
+<!-- ACTION BUTTONS -->
+<section class="flex flex-col gap-3">
+<button class="w-full py-4 px-6 bg-primary-container text-white font-bold rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">publish</span>
+                            Publish Material
+                        </button>
+<button class="w-full py-4 px-6 border-2 border-outline-variant text-on-surface-variant font-bold rounded-xl hover:bg-surface-container-high active:scale-95 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">drafts</span>
+                            Save as Draft
+                        </button>
+<button class="w-full py-3 px-6 text-error font-label-md hover:underline transition-all">
+                            Discard Changes
+                        </button>
+</section>
+</div>
+</div>
+<!-- IMAGE PREVIEW BANNER -->
+<div class="mt-12 rounded-2xl overflow-hidden border border-outline-variant h-48 relative shadow-inner">
+<div class="w-full h-full bg-cover bg-center" data-alt="A wide-angle conceptual panoramic illustration of an organized Nepali highway with clear road markings and vibrant international traffic signs. The scene is bright and educational, using the brand colors of crimson and royal blue to highlight safety features. The style is clean vector-based graphic design for a modern administrative learning platform." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXvtQnjno3VnagtRUlDLeuV66DQqgKKmHC4RtEjW0QMCYAI_cw7WQ-1sb_r4eM3pdcyXLGZnuIWMXKV1IH1PyQPe2bhVrnKLAHCpYHN6XhJA8tF7lEAfFi-nYgNT0Dkjd1WhfL_vURbii2Yp0Tozp94da2ycPzL5HY3tfKwGyuTms5IwRv-aogj9u5chqJdFZS4q3_WoTAqBLYwKYysvps__J15PzZa2sYcxdkgGOdqzzjQdOo0wp0')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent flex items-end p-8">
+<p class="text-white font-label-md flex items-center gap-2">
+<span class="material-symbols-outlined">visibility</span>
+                        Live Preview will appear here once content is added
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple Interaction logic
+        const contentTypeButtons = document.querySelectorAll('.bg-surface-container-high button');
+        const rulesSection = document.getElementById('rules-section');
+
+        contentTypeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Toggle active styles
+                contentTypeButtons.forEach(b => {
+                    b.classList.remove('bg-white', 'shadow-sm', 'text-primary', 'font-bold');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.remove('text-on-surface-variant');
+                btn.classList.add('bg-white', 'shadow-sm', 'text-primary', 'font-bold');
+
+                // Toggle rules section visibility/interaction
+                if(btn.innerText === 'Road Rule') {
+                    rulesSection.classList.remove('opacity-50', 'pointer-events-none');
+                } else {
+                    rulesSection.classList.add('opacity-50', 'pointer-events-none');
+                }
+            });
+        });
+
+        // Search Bar Focus Effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/20');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
+        });
+    </script>
+</body></html>

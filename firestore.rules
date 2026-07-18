@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Questions and question sets are public read (no auth needed for learners)
+    match /questions/{questionId} {
+      allow read: if true;
+      allow write: if false; // Admin panel uses service account
+    }
+
+    match /question_sets/{setId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /categories/{catId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Attempts and user progress require authentication
+    match /attempts/{attemptId} {
+      allow read, write: if request.auth != null 
+        && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null
+        && request.auth.uid == request.resource.data.userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read, write: if request.auth != null
+        && request.auth.uid == userId;
+    }
+
+    // Admin-only collections (no client access)
+    match /admin/{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Study Library Editor | Nepal License Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#ffdad9",
+                    "on-tertiary-fixed": "#221b00",
+                    "surface-bright": "#fcf9f8",
+                    "outline": "#916f6e",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#dc143c",
+                    "inverse-surface": "#313030",
+                    "surface": "#fcf9f8",
+                    "tertiary-fixed": "#ffe16d",
+                    "secondary": "#335ab4",
+                    "outline-variant": "#e6bdbc",
+                    "on-secondary-container": "#003387",
+                    "secondary-container": "#7da0ff",
+                    "primary-fixed-dim": "#ffb3b3",
+                    "on-secondary-fixed-variant": "#12419b",
+                    "background": "#fcf9f8",
+                    "on-surface-variant": "#5c3f3f",
+                    "on-background": "#1c1b1b",
+                    "surface-container-high": "#eae7e7",
+                    "on-primary-fixed-variant": "#920022",
+                    "tertiary-fixed-dim": "#e9c400",
+                    "surface-dim": "#dcd9d9",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#fff1f0",
+                    "secondary-fixed": "#dae1ff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#544600",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed": "#40000a",
+                    "primary": "#b1002c",
+                    "on-tertiary-container": "#4c3f00",
+                    "surface-variant": "#e5e2e1",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#bf0030",
+                    "on-surface": "#1c1b1b",
+                    "inverse-primary": "#ffb3b3",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#001849",
+                    "tertiary-container": "#c9a900",
+                    "secondary-fixed-dim": "#b3c5ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f3f0ef",
+                    "surface-container": "#f0eded",
+                    "tertiary": "#705d00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "md": "16px",
+                    "container-margin": "20px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #fcf9f8;
+            font-family: 'Inter', sans-serif;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e6bdbc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-x-hidden">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-surface-container-low dark:bg-surface-dim shadow-sm border-r border-outline-variant dark:border-outline z-50">
+<div class="p-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Nepal License</h1>
+<p class="text-on-surface-variant font-label-md text-label-md opacity-70">Exam Control Panel</p>
+</div>
+<nav class="flex-1 px-4 space-y-1 custom-scrollbar overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="font-label-md text-label-md">Question Bank</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-md text-label-md">Study Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant dark:border-outline space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-error hover:bg-error-container rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar Anchor -->
+<header class="h-16 flex justify-between items-center px-6 w-full bg-surface-bright dark:bg-surface-container-lowest border-b border-outline-variant dark:border-outline sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Admin Panel</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant opacity-60">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-secondary transition-all" placeholder="Search resources..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-surface-container-high rounded-full p-2 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close up professional portrait of a tech-focused administrator wearing a clean charcoal blazer, set against a soft, out-of-focus modern office background with warm lighting. The aesthetic is corporate yet approachable, using a high-end photography style with shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWdWRucrrZhS2WI-2-nWk2g-XmtW3xOou7POzWUPM2mEWbv9CZJT9znczsTir5zAZpon6y9yu6RYGkRxrSSPP3bm8Tgna_EtWxJswQAM7u1iaSsKXItHRH8ChVO5kKYdqGmyJJoPrcLsGw0D7-lf5HPv-RfirqQyZ-5Y-Njb9FNNC61ogi4nu1K5BboZZap8lr7RkIc-BCU_KadneBPzvWoXGTRs8Q5tEThjXBQtXl8W-dWJKlDg_P"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Editor Header -->
+<div class="px-8 py-8 flex justify-between items-end">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Study Library Editor</h1>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-80 mt-1">Manage traffic signs, road rules, and vehicle knowledge content.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+                Add New Study Material
+            </button>
+</div>
+<!-- Filter & Control Bar -->
+<section class="px-8 mb-6">
+<div class="bg-white p-4 rounded-2xl border border-outline-variant shadow-sm flex flex-wrap items-center justify-between gap-6">
+<!-- Category Tabs -->
+<div class="flex p-1 bg-surface-container-low rounded-xl">
+<button class="px-6 py-2 bg-white text-primary font-bold rounded-lg shadow-sm">Traffic Signs</button>
+<button class="px-6 py-2 text-on-surface-variant hover:bg-white/50 rounded-lg transition-all">Road Rules</button>
+<button class="px-6 py-2 text-on-surface-variant hover:bg-white/50 rounded-lg transition-all">Vehicle Knowledge</button>
+</div>
+<div class="flex items-center gap-4 flex-1 justify-end">
+<div class="flex items-center gap-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Vehicle:</label>
+<select class="bg-surface-container-low border-none rounded-lg text-sm px-3 py-2 focus:ring-secondary">
+<option>All Categories</option>
+<option>A (Motorcycle)</option>
+<option>B (Car/Jeep)</option>
+<option>K (Scooter)</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status:</label>
+<select class="bg-surface-container-low border-none rounded-lg text-sm px-3 py-2 focus:ring-secondary">
+<option>All Status</option>
+<option>Published</option>
+<option>Draft</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- Content Grid (Traffic Signs) -->
+<section class="px-8 pb-12 overflow-y-auto">
+<div class="bento-grid">
+<!-- Sign Card 1 -->
+<div class="bg-white rounded-2xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="aspect-video relative bg-surface-container-highest overflow-hidden p-6 flex items-center justify-center">
+<img class="h-32 w-auto object-contain transition-transform group-hover:scale-110" data-alt="A clean, graphic illustration of a red octagonal STOP sign with bold white lettering. The background is a crisp, cloudless blue sky, creating a high-contrast and clear educational image. The lighting is bright and even, mimicking a professional instructional photograph for a driving manual." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeJXM6Stw4SMM-nVqMxTBg2xYIvAV3K4nRAvNlq_mYZkVGqlUaszwFVbWITboeKbFtmzTdh-xb62TEdO0_27dZe0tKt9lcGGZQPYt9TTl_4ZlC-BZkvGxu4V9VFZESDwOY0ioAydne41OHVo41JT_9WdQad_1DEGB9x5AatW7AIodHHFGUJrAUaOXUeNRpM3uXz64Ak-aipGtF4_SElg1GYv-35yq41bww5etgZyWVLtaN6tEIzArp"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-primary border border-primary/20">TS-001</div>
+<div class="absolute top-3 right-3 flex gap-1">
+<span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] font-extrabold uppercase">Published</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Stop Sign</h3>
+<p class="text-primary font-bold text-lg">रोकिने संकेत</p>
+</div>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-lg text-xs font-bold">Low Difficulty</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-6 line-clamp-2">Mandatory sign requiring vehicles to come to a complete stop at the intersection line.</p>
+<div class="mt-auto pt-4 border-t border-outline-variant flex justify-between items-center">
+<div class="flex gap-2">
+<button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" title="Archive">
+<span class="material-symbols-outlined">archive</span>
+</button>
+</div>
+<button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sign Card 2 -->
+<div class="bg-white rounded-2xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="aspect-video relative bg-surface-container-highest overflow-hidden p-6 flex items-center justify-center">
+<img class="h-32 w-auto object-contain transition-transform group-hover:scale-110" data-alt="A clean graphic illustration of an inverted triangular GIVERY WAY sign with a thick red border and white interior. Set against a minimalist gray textured background. The lighting is diffused and professional, suitable for a corporate educational platform centered on road safety." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACrUW3FHjK6WQOUvOldpzgXDh4qF9YaL-2lY3pEe1Hg7TeblrObyKj_8WI6luNqjLRKf7ZMLeSe102IDW9cF7SmIfUNFlruaJ5_uMKfRhKXblz-1lZ_9HfrRxTYmFbOgqh4hjMZ-uIl6k73_eleGBE_ORyvzXvV08xBr5_-TdQs586TIYfuZVvfQ4XtA0U1vm_bCzvzj8LVUCnFn_j1a9x0BEYQIf6Gt8orPV80lGeYKj3YaWFbcdD"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-primary border border-primary/20">TS-002</div>
+<div class="absolute top-3 right-3 flex gap-1">
+<span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] font-extrabold uppercase">Published</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Give Way</h3>
+<p class="text-primary font-bold text-lg">बाटो छोड्ने</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-xs font-bold">Medium Difficulty</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-6 line-clamp-2">Slow down and be prepared to stop if necessary to let other vehicles pass.</p>
+<div class="mt-auto pt-4 border-t border-outline-variant flex justify-between items-center">
+<div class="flex gap-2">
+<button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" title="Archive">
+<span class="material-symbols-outlined">archive</span>
+</button>
+</div>
+<button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sign Card 3 -->
+<div class="bg-white rounded-2xl border border-outline-variant overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+<div class="aspect-video relative bg-surface-container-highest overflow-hidden p-6 flex items-center justify-center">
+<img class="h-32 w-auto object-contain transition-transform group-hover:scale-110" data-alt="A detailed graphic illustration of a No Entry sign, a red circle with a horizontal white bar across the center. The background is a soft beige canvas texture. The design is sharp and professional, with high-quality vector-like appearance tailored for a premium study application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFC4hbiyplbMyoKI79-k-ITmeCNS2y39XLFjEz5og4LW5WWLWE74yVbK0bUOVR0t2GBgPpU3bCndT9c6lkzWLlYr7hyY80VvhOQEGrdzyPdoG7eO1bxDmy4_T12ifS85EFlZbmrqlyDeBvHaZezvCNpNBbqw6ybzqQKfkJMBMIVopZcDIo5petqzJZLecbNJ2iK5ZI6bL2A3Ts_oIcB6a8Sl_J_hIFsQ1e5eL8lEKNxbMNPe3BQyAw"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-primary border border-primary/20">TS-003</div>
+<div class="absolute top-3 right-3 flex gap-1">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-2 py-1 rounded-full text-[10px] font-extrabold uppercase">Draft</span>
+</div>
+</div>
+<div class="p-5 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">No Entry</h3>
+<p class="text-primary font-bold text-lg">प्रवेश निषेध</p>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-lg text-xs font-bold">High Difficulty</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-6 line-clamp-2">Prohibits all vehicles from entering a specific road or area from that direction.</p>
+<div class="mt-auto pt-4 border-t border-outline-variant flex justify-between items-center">
+<div class="flex gap-2">
+<button class="p-2 text-secondary hover:bg-secondary-container rounded-lg transition-colors" title="Edit">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" title="Archive">
+<span class="material-symbols-outlined">archive</span>
+</button>
+</div>
+<button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors" title="Delete">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sign Card 4 (Add Placeholder) -->
+<button class="bg-surface-container-low rounded-2xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center p-8 group hover:bg-white hover:border-primary transition-all duration-300 min-h-[350px]">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl">add</span>
+</div>
+<p class="mt-4 font-bold text-on-surface-variant group-hover:text-primary">Create New Entry</p>
+<p class="text-xs text-on-surface-variant opacity-60 text-center mt-2 max-w-[150px]">Add a new sign or rule to the Study Library</p>
+</button>
+</div>
+</section>
+</main>
+<!-- Floating Toast Feedback Container -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3" id="toast-container"></div>
+<script>
+        // Simple Interaction logic for demo
+        const toastContainer = document.getElementById('toast-container');
+        
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg transform transition-all duration-500 translate-y-20 ${type === 'success' ? 'bg-secondary text-white' : 'bg-primary text-white'}`;
+            toast.innerHTML = `
+                <span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : 'error'}</span>
+                <span class="font-bold text-sm">${message}</span>
+            `;
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-20');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-10px]');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // Action buttons event delegation
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+            
+            if (target.title === 'Edit') {
+                showToast('Opening material editor...');
+            } else if (target.title === 'Delete') {
+                if (confirm('Are you sure you want to delete this study material?')) {
+                    showToast('Material removed successfully.', 'error');
+                }
+            } else if (target.title === 'Archive') {
+                showToast('Material moved to archives.');
+            }
+        });
+
+        // Search highlight interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-105');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-105');
+        });
+    </script>
+</body></html>

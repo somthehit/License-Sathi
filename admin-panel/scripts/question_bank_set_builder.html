@@ -1,0 +1,1068 @@
+<!DOCTYPE html> <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank Set Builder</title>
+    <!-- External Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Google+Sans+Flex:wght@300;400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0"></script>
+    
+    <!-- CSS Design System -->
+    <style>
+        :root {
+            --primary: #0b57d0;
+            --on-primary: #fff;
+            --primary-container: #d3e3fd;
+            --on-primary-container: #041e49;
+            --secondary: #00639b;
+            --on-secondary: #fff;
+            --secondary-container: #c2e7ff;
+            --tertiary: #146c2e;
+            --on-tertiary: #fff;
+            --tertiary-container: #c4eed0;
+            --surface: #fff;
+            --surface-container: #f0f4f9;
+            --surface-container-high: #e9ebf0;
+            --on-surface-default: #1b1c1d;
+            --on-surface-de-emphasis: #444746;
+            --stroke-default: #dcdfe5;
+            --error: #b3261e;
+            --error-container: #f9dedc;
+            --success: #146c2e;
+            --success-container: #c4eed0;
+            --warning: #f9ab00;
+            --warning-container: #ffe0b2;
+            --radius-m: 12px;
+            --radius-l: 16px;
+            --ff-sans: "Google Sans", "Roboto", sans-serif;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #a8c7fa;
+                --on-primary: #062e6f;
+                --primary-container: #1f3760;
+                --on-primary-container: #d3e3fd;
+                --secondary: #7fcfff;
+                --on-secondary: #003354;
+                --secondary-container: #004a77;
+                --tertiary: #6dd58c;
+                --on-tertiary: #0a3818;
+                --tertiary-container: #0f5223;
+                --surface: #101218;
+                --surface-container: #282a2c;
+                --surface-container-high: #3a3f50;
+                --on-surface-default: #fff;
+                --on-surface-de-emphasis: #c4c7c5;
+                --stroke-default: #2d2f38;
+                --error: #f2b8b5;
+                --error-container: #8c1d18;
+                --success: #6dd58c;
+                --success-container: #1f3025;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--ff-sans);
+            background: var(--surface-container);
+            color: var(--on-surface-default);
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .workspace-grid {
+                grid-template-columns: 450px 1fr;
+            }
+        }
+
+        .panel-card {
+            background: var(--surface);
+            border-radius: var(--radius-l);
+            padding: 24px;
+            border: 1px solid var(--stroke-default);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-row-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--on-surface-de-emphasis);
+        }
+
+        input, select, textarea {
+            font-family: var(--ff-sans);
+            font-size: 14px;
+            padding: 10px 14px;
+            border-radius: var(--radius-m);
+            border: 1px solid var(--stroke-default);
+            background: var(--surface-container);
+            color: var(--on-surface-default);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-container);
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-m);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .primary-btn:hover {
+            opacity: 0.9;
+        }
+
+        .secondary-btn {
+            background: var(--surface-container-high);
+            color: var(--on-surface-default);
+            border: 1px solid var(--stroke-default);
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-m);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .set-pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .set-pill {
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--surface-container);
+            border: 1px solid var(--stroke-default);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .set-pill.active {
+            background: var(--primary-container);
+            color: var(--on-primary-container);
+            border-color: var(--primary);
+        }
+
+        .set-pill.completed {
+            border-color: var(--tertiary);
+        }
+
+        .set-pill.completed::after {
+            content: "✓";
+            color: var(--tertiary);
+            font-weight: bold;
+        }
+
+        .progress-bar-container {
+            background: var(--surface-container-high);
+            height: 10px;
+            border-radius: 99px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            background: var(--primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background-color 0.3s;
+        }
+
+        .progress-bar-fill.completed {
+            background: var(--tertiary);
+        }
+
+        .question-card {
+            background: var(--surface-container);
+            border: 1px solid var(--stroke-default);
+            border-radius: var(--radius-m);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--on-surface-de-emphasis);
+        }
+
+        .badge-cat {
+            background: var(--surface-container-high);
+            padding: 4px 10px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .option-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-item {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            background: var(--surface);
+            border: 1px solid var(--stroke-default);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-item.correct {
+            border-color: var(--tertiary);
+            background: var(--tertiary-container);
+            color: var(--on-tertiary-container);
+        }
+
+        .action-icon {
+            cursor: pointer;
+            color: var(--on-surface-de-emphasis);
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+
+        .action-icon:hover {
+            color: var(--error);
+        }
+
+        /* Simulator CSS */
+        .simulator-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .simulator-content {
+            background: var(--surface);
+            border-radius: var(--radius-l);
+            width: 100%;
+            max-width: 650px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sim-option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 14px 18px;
+            border-radius: var(--radius-m);
+            border: 1px solid var(--stroke-default);
+            background: var(--surface-container);
+            color: var(--on-surface-default);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sim-option-btn:hover {
+            background: var(--surface-container-high);
+        }
+
+        .sim-option-btn.selected-correct {
+            background: var(--tertiary-container);
+            border-color: var(--tertiary);
+            color: var(--on-tertiary);
+        }
+
+        .sim-option-btn.selected-wrong {
+            background: var(--error-container);
+            border-color: var(--error);
+        }
+    </style>
+    <script>
+      window['CALLER_ID'] = 'spark';
+    </script>
+</head>
+<body class="spark-widget-shell">
+
+<div class="workspace-grid">
+    <!-- Left panel: Controls and New Question Form -->
+    <div class="panel-card">
+        <div>
+            <h2 style="margin: 0 0 4px 0; font-size: 20px;">Question Bank Configurator</h2>
+            <p style="margin: 0; font-size: 13px; color: var(--on-surface-de-emphasis);">
+                Each standard Set must contain exactly <b>20 Questions</b>.
+            </p>
+        </div>
+
+        <div style="border-top: 1px solid var(--stroke-default); padding-top: 16px;">
+            <label style="display:block; margin-bottom: 8px;">Active Sets Dashboard</label>
+            <div id="setPillContainer" class="set-pill-container"></div>
+        </div>
+
+        <!-- Set Status Metrics Card -->
+        <div id="setMetricsCard" style="background: var(--surface-container); border: 1px solid var(--stroke-default); border-radius: var(--radius-m); padding: 16px; display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; justify-content:space-between; font-size: 14px; font-weight: 500;">
+                <span id="activeSetName">Set A Status</span>
+                <span id="activeSetRatio">0 / 20</span>
+            </div>
+            <div class="progress-bar-container">
+                <div id="activeSetProgress" class="progress-bar-fill"></div>
+            </div>
+            <div id="setStatusAlert" style="font-size: 12px; color: var(--on-surface-de-emphasis); display:flex; align-items:center; gap:6px;">
+                <span class="material-icons" style="font-size: 16px;">info</span>
+                <span id="setStatusMessage">Loading target Set...</span>
+            </div>
+            <!-- Exam launch helper button -->
+            <button id="examSimulatorBtn" class="primary-btn" style="display: none; background: var(--tertiary); margin-top: 6px;">
+                <span class="material-icons">play_circle</span> Launch Set Exam (20 Qs)
+            </button>
+        </div>
+
+        <!-- Add Question Form -->
+        <div class="form-section" style="border-top: 1px solid var(--stroke-default); padding-top: 16px;">
+            <h3 style="margin: 0; font-size: 15px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                <span class="material-icons" style="color: var(--primary);">add_box</span> Add Question to Current Set
+            </h3>
+
+            <div class="form-row">
+                <label>Question category</label>
+                <select id="fieldCategory">
+                    <option value="Traffic Sign">Traffic Sign</option>
+                    <option value="Road Rule">Road Rule</option>
+                    <option value="Law">Law</option>
+                    <option value="Vehicle Knowledge">Vehicle Knowledge</option>
+                </select>
+            </div>
+
+            <div class="form-row-group">
+                <div class="form-row">
+                    <label>Question (English)</label>
+                    <input type="text" id="qEn" placeholder="What does this sign mean?">
+                </div>
+                <div class="form-row">
+                    <label>Question (Nepali)</label>
+                    <input type="text" id="qNp" placeholder="यो संकेतले के बुझाउँछ?">
+                </div>
+            </div>
+
+            <!-- Option inputs -->
+            <div class="form-row-group">
+                <div class="form-row">
+                    <label>Option A (English)</label>
+                    <input type="text" id="optA_En" placeholder="No Entry">
+                </div>
+                <div class="form-row">
+                    <label>Option A (Nepali)</label>
+                    <input type="text" id="optA_Np" placeholder="प्रवेश निषेध">
+                </div>
+            </div>
+
+            <div class="form-row-group">
+                <div class="form-row">
+                    <label>Option B (English)</label>
+                    <input type="text" id="optB_En" placeholder="Stop">
+                </div>
+                <div class="form-row">
+                    <label>Option B (Nepali)</label>
+                    <input type="text" id="optB_Np" placeholder="रोक्नुहोस्">
+                </div>
+            </div>
+
+            <div class="form-row-group">
+                <div class="form-row">
+                    <label>Option C (English)</label>
+                    <input type="text" id="optC_En" placeholder="One Way">
+                </div>
+                <div class="form-row">
+                    <label>Option C (Nepali)</label>
+                    <input type="text" id="optC_Np" placeholder="एकतर्फी बाटो">
+                </div>
+            </div>
+
+            <div class="form-row-group">
+                <div class="form-row">
+                    <label>Option D (English)</label>
+                    <input type="text" id="optD_En" placeholder="Go Straight">
+                </div>
+                <div class="form-row">
+                    <label>Option D (Nepali)</label>
+                    <input type="text" id="optD_Np" placeholder="सिधा जानुहोस्">
+                </div>
+            </div>
+
+            <div class="form-row-group">
+                <div class="form-row">
+                    <label>Correct Option</label>
+                    <select id="correctOption">
+                        <option value="A">Option A</option>
+                        <option value="B">Option B</option>
+                        <option value="C">Option C</option>
+                        <option value="D">Option D</option>
+                    </select>
+                </div>
+                <div class="form-row" style="justify-content: flex-end;">
+                    <button id="addBtn" class="primary-btn">
+                        <span class="material-icons">save</span> Save Question
+                    </button>
+                </div>
+            </div>
+            
+            <button id="seedDataBtn" class="secondary-btn" style="margin-top: 4px; font-size: 12px; padding: 6px;">
+                <span class="material-icons" style="font-size: 16px;">bolt</span> Seed Dummy Questions (Fills Set B)
+            </button>
+        </div>
+    </div>
+
+    <!-- Right panel: Interactive dynamic Question List & Search filtering -->
+    <div class="panel-card" style="flex: 1;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+                <h2 style="margin: 0; font-size: 20px;">Questions in <span id="currentSetLabel">Set A</span></h2>
+                <p id="totalQuestionsInCurrentSet" style="margin: 4px 0 0 0; font-size: 13px; color: var(--on-surface-de-emphasis);"></p>
+            </div>
+            <div style="position: relative;">
+                <input type="text" id="searchBar" placeholder="Search questions..." style="padding-left: 36px; max-width: 200px;">
+                <span class="material-icons" style="position: absolute; left: 10px; top: 11px; font-size: 18px; color: var(--on-surface-de-emphasis);">search</span>
+            </div>
+        </div>
+
+        <div id="questionsContainer" style="display:flex; flex-direction:column; gap:16px; overflow-y:auto; max-height: calc(100vh - 200px); padding-right: 4px;">
+            <!-- Render questions dynamically here -->
+        </div>
+    </div>
+</div>
+
+<!-- Exam Simulator Modal window for 20 question sets -->
+<div id="simModal" class="simulator-modal">
+    <div class="simulator-content">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 id="simTitle" style="margin:0; font-size:18px;">Practice Exam Session</h3>
+            <span id="closeSimBtn" class="material-icons" style="cursor:pointer; color: var(--on-surface-de-emphasis);">close</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="simProgressBar" class="progress-bar-fill" style="background-color: var(--primary);"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color: var(--on-surface-de-emphasis);">
+            <span id="simCounter">Question 1 of 20</span>
+            <span id="simScore" style="font-weight:bold;">Score: 0/0</span>
+        </div>
+        
+        <div id="simQuestionContainer" style="display:flex; flex-direction:column; gap:6px;">
+            <h2 id="simQEn" style="margin:0; font-size:16px;"></h2>
+            <h3 id="simQNp" style="margin:0; font-size:15px; font-weight:normal; color: var(--on-surface-de-emphasis);"></h3>
+        </div>
+
+        <div id="simOptionsContainer" style="display:flex; flex-direction:column; gap:10px;">
+            <!-- Sim options render here -->
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div id="simFeedback" style="font-size:14px; font-weight:bold;"></div>
+            <button id="simNextBtn" class="primary-btn" style="display:none;">Next Question <span class="material-icons">arrow_forward</span></button>
+        </div>
+    </div>
+</div>
+
+<script>
+if (typeof WH === 'undefined') {
+    window.WH = {
+        createApp: function(config) {
+            const state = {
+                activeCategoryFilter: config.params?.activeCategoryFilter?.value || 'All',
+                _listeners: {},
+                _subscribe: function(key, callback) {
+                    if (!this._listeners[key]) this._listeners[key] = [];
+                    this._listeners[key].push(callback);
+                }
+            };
+            const proxyState = new Proxy(state, {
+                set(target, prop, val) {
+                    target[prop] = val;
+                    if (target._listeners[prop]) {
+                        target._listeners[prop].forEach(cb => cb(val));
+                    }
+                    return true;
+                },
+                get(target, prop) {
+                    return target[prop];
+                }
+            });
+
+            // Dynamically build active filter category buttons if the main shell environment is absent
+            setTimeout(() => {
+                const searchContainer = document.querySelector("#searchBar")?.parentElement?.parentElement;
+                if (searchContainer && config.params?.activeCategoryFilter) {
+                    const filterWrap = document.createElement("div");
+                    filterWrap.className = "set-pill-container";
+                    filterWrap.style.marginTop = "12px";
+                    filterWrap.style.width = "100%";
+                    const options = config.params.activeCategoryFilter.options;
+                    options.forEach(opt => {
+                        const pill = document.createElement("div");
+                        pill.className = `set-pill ${proxyState.activeCategoryFilter === opt ? 'active' : ''}`;
+                        pill.innerText = opt;
+                        pill.addEventListener("click", () => {
+                            proxyState.activeCategoryFilter = opt;
+                            filterWrap.querySelectorAll(".set-pill").forEach(p => p.classList.remove("active"));
+                            pill.classList.add("active");
+                        });
+                        filterWrap.appendChild(pill);
+                    });
+                    searchContainer.appendChild(filterWrap);
+                }
+            }, 100);
+
+            return { state: proxyState };
+        },
+        WidgetHelpers: {
+            setHUD: function(hudItems) {
+                let hudContainer = document.getElementById("mock-hud-container");
+                if (!hudContainer) {
+                    hudContainer = document.createElement("div");
+                    hudContainer.id = "mock-hud-container";
+                    hudContainer.style.cssText = "display: flex; gap: 12px; flex-wrap: wrap; background: var(--surface); padding: 12px 16px; margin: 0 auto 16px auto; max-width: 1400px; border-radius: var(--radius-l); border: 1px solid var(--stroke-default); width: calc(100% - 48px); box-shadow: 0 4px 12px rgba(0,0,0,0.03);";
+                    const grid = document.querySelector(".workspace-grid");
+                    if (grid) grid.parentNode.insertBefore(hudContainer, grid);
+                }
+                hudContainer.innerHTML = "";
+                hudItems.forEach(item => {
+                    const pill = document.createElement("div");
+                    pill.style.cssText = "flex: 1; min-width: 150px; padding: 10px 14px; background: var(--surface-container); border-radius: var(--radius-m); border: 1px solid var(--stroke-default); text-align: center;";
+                    pill.innerHTML = `
+                        <div style="font-size: 11px; color: var(--on-surface-de-emphasis); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">${item.label}</div>
+                        <div style="font-size: 18px; font-weight: 700; color: ${item.color || 'var(--on-surface-default)'}; margin-top: 4px;">${item.value}</div>
+                    `;
+                    hudContainer.appendChild(pill);
+                });
+            }
+        }
+    };
+}
+
+// Mock initial questions to establish dynamic sets. Set B holds exactly 20 to test simulator launch.
+let questionDB = [
+    { id: 1, set: "Set A", category: "Traffic Sign", qEn: "What does a red circular sign mean?", qNp: "रातो गोलो चिन्हले के जनाउँछ?", optA_En: "Stop", optA_Np: "रोक्नुहोस्", optB_En: "Prohibitive (No Entry/Restricted)", optB_Np: "प्रतिबन्धात्मक (प्रवेश निषेध)", optC_En: "Warning", optC_Np: "चेतावनी", optD_En: "Information", optD_Np: "सूचना", correct: "B" },
+    { id: 2, set: "Set A", category: "Road Rule", qEn: "Whose priority is highest at an intersection?", qNp: "चौबाटोमा कसको प्राथमिकता सबैभन्दा बढी हुन्छ?", optA_En: "Left-turning vehicles", optA_Np: "बायाँ मोडिने सवारी", optB_En: "Right-turning vehicles", optB_Np: "दायाँ मोडिने सवारी", optC_En: "Pedestrian / Ambulance", optC_Np: "पैदलयात्री / एम्बुलेन्स", optD_En: "Heavy Trucks", optD_Np: "भारी ट्रक", correct: "C" },
+    { id: 3, set: "Set A", category: "Law", qEn: "What is the legal blood alcohol limit for drivers in Nepal?", qNp: "नेपालमा चालकहरूको लागि कानुनी मदिराको सीमा कति हो?", optA_En: "Zero tolerance (0.00%)", optA_Np: "शून्य सहनशीलता (०.०० %)", optB_En: "0.05%", optB_Np: "०.०५ प्रतिशत", optC_En: "0.08%", optC_Np: "०.०८ प्रतिशत", optD_En: "0.02%", optD_Np: "०.०२ प्रतिशत", correct: "A" }
+];
+
+// List of active Sets. Sets can be dynamically selected and updated.
+let sets = ["Set A", "Set B", "Set C", "Set D"];
+let currentSet = "Set A";
+
+// UI References
+const setPillContainer = document.getElementById("setPillContainer");
+const activeSetName = document.getElementById("activeSetName");
+const activeSetRatio = document.getElementById("activeSetRatio");
+const activeSetProgress = document.getElementById("activeSetProgress");
+const setStatusAlert = document.getElementById("setStatusAlert");
+const setStatusMessage = document.getElementById("setStatusMessage");
+const examSimulatorBtn = document.getElementById("examSimulatorBtn");
+const currentSetLabel = document.getElementById("currentSetLabel");
+const totalQuestionsInCurrentSet = document.getElementById("totalQuestionsInCurrentSet");
+const questionsContainer = document.getElementById("questionsContainer");
+const searchBar = document.getElementById("searchBar");
+
+// Form References
+const fieldCategory = document.getElementById("fieldCategory");
+const qEn = document.getElementById("qEn");
+const qNp = document.getElementById("qNp");
+const optA_En = document.getElementById("optA_En");
+const optA_Np = document.getElementById("optA_Np");
+const optB_En = document.getElementById("optB_En");
+const optB_Np = document.getElementById("optB_Np");
+const optC_En = document.getElementById("optC_En");
+const optC_Np = document.getElementById("optC_Np");
+const optD_En = document.getElementById("optD_En");
+const optD_Np = document.getElementById("optD_Np");
+const correctOption = document.getElementById("correctOption");
+const addBtn = document.getElementById("addBtn");
+const seedDataBtn = document.getElementById("seedDataBtn");
+
+// Simulator State
+let simActive = false;
+let simQuestions = [];
+let simIndex = 0;
+let simCorrectCount = 0;
+
+const simModal = document.getElementById("simModal");
+const simTitle = document.getElementById("simTitle");
+const closeSimBtn = document.getElementById("closeSimBtn");
+const simProgressBar = document.getElementById("simProgressBar");
+const simCounter = document.getElementById("simCounter");
+const simScore = document.getElementById("simScore");
+const simQEn = document.getElementById("simQEn");
+const simQNp = document.getElementById("simQNp");
+const simOptionsContainer = document.getElementById("simOptionsContainer");
+const simFeedback = document.getElementById("simFeedback");
+const simNextBtn = document.getElementById("simNextBtn");
+
+// Setup WidgetHelpers App Connection
+const appState = WH.createApp({
+    title: "Question Bank & Exam Builder",
+    params: {
+        activeCategoryFilter: {
+            type: "segmented",
+            value: "All",
+            options: ["All", "Traffic Sign", "Road Rule", "Law", "Vehicle Knowledge"],
+            label: "Filter List"
+        }
+    }
+});
+
+// Calculate current set diagnostics and trigger notifications
+const updateDiagnostics = () => {
+    const totalQs = questionDB.length;
+    const completedSets = sets.filter(s => questionDB.filter(q => q.set === s).length === 20).length;
+    
+    WH.WidgetHelpers.setHUD([
+        { label: "Active Set", value: currentSet, color: "var(--primary)" },
+        { label: "Set Completion", value: `${questionDB.filter(q => q.set === currentSet).length} / 20`, color: "var(--tertiary)" },
+        { label: "Total Questions", value: totalQs.toString(), color: "var(--on-surface-default)" },
+        { label: "Ready Sets", value: `${completedSets} Completed`, color: "var(--success)" }
+    ]);
+};
+
+// Render Set Pills on dashboard with active counts
+const renderSetPills = () => {
+    setPillContainer.innerHTML = "";
+    sets.forEach(set => {
+        const count = questionDB.filter(q => q.set === set).length;
+        const pill = document.createElement("div");
+        pill.className = `set-pill ${set === currentSet ? 'active' : ''} ${count === 20 ? 'completed' : ''}`;
+        
+        const label = document.createElement("span");
+        label.innerText = `${set} (${count}/20)`;
+        pill.appendChild(label);
+
+        pill.addEventListener("click", () => {
+            currentSet = set;
+            renderSetPills();
+            updateSetStatusCard();
+            renderQuestionList();
+            updateDiagnostics();
+        });
+
+        setPillContainer.appendChild(pill);
+    });
+};
+
+const updateSetStatusCard = () => {
+    const currentCount = questionDB.filter(q => q.set === currentSet).length;
+    activeSetName.innerText = `${currentSet} Status`;
+    activeSetRatio.innerText = `${currentCount} / 20`;
+    
+    const percentage = Math.min((currentCount / 20) * 100, 100);
+    activeSetProgress.style.width = `${percentage}%`;
+
+    if (currentCount === 20) {
+        activeSetProgress.className = "progress-bar-fill completed";
+        setStatusMessage.innerText = "Set completed! You can now launch this Exam Practice Simulator.";
+        examSimulatorBtn.style.display = "flex";
+    } else {
+        activeSetProgress.className = "progress-bar-fill";
+        const rem = 20 - currentCount;
+        if (rem < 0) {
+            setStatusMessage.innerText = `Set has ${Math.abs(rem)} excess questions. Remove some to make it standard 20.`;
+            examSimulatorBtn.style.display = "none";
+        } else {
+            setStatusMessage.innerText = `Need ${rem} more questions to complete this exam practice set.`;
+            examSimulatorBtn.style.display = "none";
+        }
+    }
+    currentSetLabel.innerText = currentSet;
+};
+
+const renderQuestionList = () => {
+    questionsContainer.innerHTML = "";
+    
+    // Filter questions by selected Set, Category from state, and Search Input text
+    const searchFilter = searchBar.value.toLowerCase();
+    const catFilter = appState.state.activeCategoryFilter || "All";
+
+    const filtered = questionDB.filter(q => {
+        const matchesSet = q.set === currentSet;
+        const matchesCat = catFilter === "All" || q.category === catFilter;
+        const matchesSearch = q.qEn.toLowerCase().includes(searchFilter) || q.qNp.includes(searchFilter);
+        return matchesSet && matchesCat && matchesSearch;
+    });
+
+    totalQuestionsInCurrentSet.innerText = `Showing ${filtered.length} of ${questionDB.filter(q => q.set === currentSet).length} questions in this set`;
+
+    if (filtered.length === 0) {
+        questionsContainer.innerHTML = `<p style="text-align:center; padding: 20px; color: var(--on-surface-de-emphasis);">No questions found matching the filter criteria.</p>`;
+        return;
+    }
+
+    filtered.forEach((q, idx) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+
+        // Card header metadata
+        const meta = document.createElement("div");
+        meta.className = "question-meta";
+        meta.innerHTML = `
+            <div>
+                <span class="badge-cat" style="background-color: var(--primary-container); color: var(--on-primary-container);">${q.category}</span>
+                <span style="margin-left: 8px;">Q. ${idx + 1}</span>
+            </div>
+        `;
+
+        // Trash / delete action
+        const deleteIcon = document.createElement("span");
+        deleteIcon.className = "material-icons action-icon";
+        deleteIcon.innerText = "delete_outline";
+        deleteIcon.addEventListener("click", () => {
+            questionDB = questionDB.filter(item => item.id !== q.id);
+            updateDiagnostics();
+            renderSetPills();
+            updateSetStatusCard();
+            renderQuestionList();
+        });
+        meta.appendChild(deleteIcon);
+        card.appendChild(meta);
+
+        // Core questions Text
+        const titleSec = document.createElement("div");
+        titleSec.innerHTML = `
+            <div style="font-weight: 600; font-size: 15px; margin-bottom: 2px;">${q.qEn}</div>
+            <div style="font-size: 14px; color: var(--on-surface-de-emphasis);">${q.qNp}</div>
+        `;
+        card.appendChild(titleSec);
+
+        // Options Grid (4 options)
+        const optGrid = document.createElement("div");
+        optGrid.className = "option-grid";
+
+        const options = [
+            { key: "A", en: q.optA_En, np: q.optA_Np },
+            { key: "B", en: q.optB_En, np: q.optB_Np },
+            { key: "C", en: q.optC_En, np: q.optC_Np },
+            { key: "D", en: q.optD_En, np: q.optD_Np }
+        ];
+
+        options.forEach(opt => {
+            const item = document.createElement("div");
+            item.className = `option-item ${q.correct === opt.key ? 'correct' : ''}`;
+            item.innerHTML = `
+                <strong style="text-transform: uppercase;">${opt.key}:</strong> 
+                <span>${opt.en} / <span style="opacity:0.8;">${opt.np}</span></span>
+            `;
+            optGrid.appendChild(item);
+        });
+
+        card.appendChild(optGrid);
+        questionsContainer.appendChild(card);
+    });
+};
+
+appState.state._subscribe('activeCategoryFilter', renderQuestionList);
+searchBar.addEventListener("input", renderQuestionList);
+
+// Form submit validation and insertion logic
+addBtn.addEventListener("click", () => {
+    const category = fieldCategory.value;
+    const questionEn = qEn.value.trim();
+    const questionNp = qNp.value.trim();
+    const aEn = optA_En.value.trim();
+    const aNp = optA_Np.value.trim();
+    const bEn = optB_En.value.trim();
+    const bNp = optB_Np.value.trim();
+    const cEn = optC_En.value.trim();
+    const cNp = optC_Np.value.trim();
+    const dEn = optD_En.value.trim();
+    const dNp = optD_Np.value.trim();
+    const correct = correctOption.value;
+
+    if (!questionEn || !questionNp || !aEn || !aNp || !bEn || !bNp) {
+        alert("Please specify at least English and Nepali translations for the Question, Option A, and Option B!");
+        return;
+    }
+
+    // Append standard question
+    const newQuestion = {
+        id: Date.now(),
+        set: currentSet,
+        category: category,
+        qEn: questionEn,
+        qNp: questionNp,
+        optA_En: aEn,
+        optA_Np: aNp,
+        optB_En: bEn,
+        optB_Np: bNp,
+        optC_En: cEn || "N/A",
+        optC_Np: cNp || "लागू छैन",
+        optD_En: dEn || "N/A",
+        optD_Np: dNp || "लागू छैन",
+        correct: correct
+    };
+
+    questionDB.push(newQuestion);
+    
+    // Clear Form Fields to facilitate fast sequence adding
+    qEn.value = "";
+    qNp.value = "";
+    optA_En.value = "";
+    optA_Np.value = "";
+    optB_En.value = "";
+    optB_Np.value = "";
+    optC_En.value = "";
+    optC_Np.value = "";
+    optD_En.value = "";
+    optD_Np.value = "";
+    
+    // Refresh GUI representation
+    updateDiagnostics();
+    renderSetPills();
+    updateSetStatusCard();
+    renderQuestionList();
+});
+
+// Auto-seeding helper to quickly test full 20 Question Set capability on Set B
+seedDataBtn.addEventListener("click", () => {
+    // Check if Set B already has seeding to avoid duplicate entries
+    if (questionDB.filter(q => q.set === "Set B").length >= 20) {
+        alert("Set B already has 20 or more questions seeded.");
+        return;
+    }
+
+    const mockSeed = [
+        { category: "Traffic Sign", qEn: "No overtaking sign warns about?", qNp: "ओभरटेक निषेध चिन्हले के देखाउँछ?", optA_En: "Do not overtake", optA_Np: "ओभरटेक नगर्नुहोस्", optB_En: "No parking", optB_Np: "पार्किङ निषेध", optC_En: "One way entry", optC_Np: "एकतर्फी प्रवेश", optD_En: "Speed zone limit", optD_Np: "गति सीमा", correct: "A" },
+        { category: "Road Rule", qEn: "What is the speed limit in urban roads?", qNp: "सहरी सडकमा गति सीमा कति हुन्छ?", optA_En: "40 km/h", optA_Np: "४० कि.मी./घण्टा", optB_En: "80 km/h", optB_Np: "८० कि.मी./घण्टा", optC_En: "120 km/h", optC_Np: "१२० कि.मी./घण्टा", optD_En: "No limit", optD_Np: "कुनै सीमा छैन", correct: "A" },
+        { category: "Law", qEn: "Driving without a license can lead to?", qNp: "लाइसेन्स बिना सवारी चलाउँदा के हुन्छ?", optA_En: "Imprisonment or Fine", optA_Np: "कैद वा जरिवाना", optB_En: "Warning", optB_Np: "चेतावनी मात्र", optC_En: "Vehicle confiscation", optC_Np: "सवारी जफत", optD_En: "No action", optD_Np: "केही हुँदैन", correct: "A" },
+        { category: "Vehicle Knowledge", qEn: "What is the key purpose of engine coolant?", qNp: "इन्जिन कुलान्टको मुख्य काम के हो?", optA_En: "Regulate heat temperature", optA_Np: "तापक्रम सन्तुलन गर्ने", optB_En: "Lubricate gears", optB_Np: "गियर चिप्लो बनाउने", optC_En: "Boost speed horsepower", optC_Np: "हर्सपावर बढाउने", optD_En: "Filter heavy exhaust", optD_Np: "धुवाँ फिल्टर गर्ने", correct: "A" },
+        { category: "Traffic Sign", qEn: "What does an inverted triangle road sign mean?", qNp: "उल्टो त्रिभुज चिन्हको अर्थ के हो?", optA_En: "Give Way", optA_Np: "बाटो दिनुहोस्", optB_En: "Stop", optB_Np: "रोक्नुहोस्", optC_En: "Speed breaker", optC_Np: "गति अवरोधक", optD_En: "No Entry", optD_Np: "प्रवेश निषेध", correct: "A" },
+        { category: "Road Rule", qEn: "When turning left, you must yield to?", qNp: "बायाँ मोडदा कसलाई बाटो दिनुपर्छ?", optA_En: "Pedestrians on the crosswalk", optA_Np: "जेब्रा क्रसिङका यात्रीहरू", optB_En: "Vehicles on your right", optB_Np: "दायाँका सवारी साधन", optC_En: "No one", optC_Np: "कसैलाई पर्दैन", optD_En: "Opposite vehicles turning right", optD_Np: "दायाँ मोडिने विपरित सवारी", correct: "A" },
+        { category: "Traffic Sign", qEn: "A blue circular icon indicates?", qNp: "निलो गोलो चिन्हले के निर्देशन गर्छ?", optA_En: "Mandatory instruction", optA_Np: "अनिवार्य निर्देशन", optB_En: "Speed warning", optB_Np: "गति चेतावनी", optC_En: "No entry ahead", optC_Np: "अगाडि प्रवेश छैन", optD_En: "End of speed limit", optD_Np: "गति सीमा समाप्त", correct: "A" },
+        { category: "Vehicle Knowledge", qEn: "Which component powers spark plugs?", qNp: "स्पार्क प्लगलाई केले उर्जा दिन्छ?", optA_En: "Ignition Battery", optA_Np: "इग्निसन ब्याट्री", optB_En: "Radiator Fan", optB_Np: "रेडिएटर फ्यान", optC_En: "Exhaust Muffler", optC_Np: "साइलेन्सर", optD_En: "Air filter", optD_Np: "हावा फिल्टर", correct: "A" },
+        { category: "Law", qEn: "What is the validity term of public license in Nepal?", qNp: "नेपालमा सार्वजनिक लाइसेन्सको अवधि कति हुन्छ?", optA_En: "5 Years", optA_Np: "५ वर्ष", optB_En: "10 Years", optB_Np: "१० वर्ष", optC_En: "1 Year", optC_Np: "१ वर्ष", optD_En: "Life time", optD_Np: "जीवनभर", correct: "A" },
+        { category: "Traffic Sign", qEn: "Double yellow solid lines in the center mean?", qNp: "बीचमा कोरिएका दुईवटा पहेँला सीधा रेखाको अर्थ के हो?", optA_En: "Strictly no overtaking or crossing", optA_Np: "ओभरटेक वा क्रस गर्न नपाइने", optB_En: "Allows temporary crossing", optB_Np: "अस्थायी क्रस गर्न पाइने", optC_En: "Overtake with caution", optC_Np: "सावधानीपूर्वक ओभरटेक", optD_En: "Parking line marker", optD_Np: "पार्किङ गर्ने ठाउँ", correct: "A" },
+        { category: "Road Rule", qEn: "What does flashing red light represent?", qNp: "झिमझिम गर्ने रातो बत्तीको अर्थ के हो?", optA_En: "Stop completely then proceed safely", optA_Np: "पूरै रोकेर सुरक्षित भएपछि जाने", optB_En: "Accelerate forward", optB_Np: "गति बढाउने", optC_En: "Slow down slightly", optC_Np: "अलिकति ढिलो गर्ने", optD_En: "Caution path blocked", optD_Np: "चेतावनी मार्ग अवरुद्ध", correct: "A" },
+        { category: "Vehicle Knowledge", qEn: "What does blue smoke from exhaust represent?", qNp: "साइलेन्सरबाट निलो धुवाँ निस्कनुको अर्थ के हो?", optA_En: "Oil leaks in combustion chamber", optA_Np: "कम्बस्चन च्याम्बरमा तेल चुहिनु", optB_En: "Perfect air fuel ratio", optB_Np: "उत्कृष्ट हावा र इन्धनको अनुपात", optC_En: "Coolant fluid leakage", optC_Np: "कुलान्ट चुहिनु", optD_En: "Dirty air filter", optD_Np: "फोहोर एयर फिल्टर", correct: "A" },
+        { category: "Traffic Sign", qEn: "What is represented by a red cross over blue icon?", qNp: "निलो पृष्ठभूमिमा रातो क्रस चिन्हको अर्थ के हो?", optA_En: "No Stopping or Standing", optA_Np: "सवारी रोक्न निषेध", optB_En: "No entry zone", optB_Np: "प्रवेश निषेध क्षेत्र", optC_En: "Speed limits warning", optC_Np: "गति सीमा चेतावनी", optD_En: "Parking permitted here", optD_Np: "पार्किङ अनुमति", correct: "A" },
+        { category: "Law", qEn: "Which authority issues driving license?", qNp: "सवारी चालक अनुमति पत्र कुन कार्यालयले जारी गर्छ?", optA_En: "DOTM Nepal", optA_Np: "यातायात व्यवस्था विभाग", optB_En: "Traffic Police Division", optB_Np: "ट्राफिक प्रहरी प्रभाग", optC_En: "Municipality Ward", optC_Np: "नगरपालिका वडा कार्यालय", optD_En: "Ministry of Finance", optD_Np: "अर्थ मन्त्रालय", correct: "A" },
+        { category: "Road Rule", qEn: "Whom should you call in a medical emergency?", qNp: "सडक दुर्घटनामा कसलाई फोन गर्नुपर्छ?", optA_En: "Ambulance (102)", optA_Np: "एम्बुलेन्स (१०२)", optB_En: "Police (100)", optB_Np: "प्रहरी (१००)", optC_En: "Fire Brigade (101)", optC_Np: "दमकल (१०१)", optD_En: "Traffic Control (103)", optD_Np: "ट्राफिक कन्ट्रोल (१०३)", correct: "A" },
+        { category: "Vehicle Knowledge", qEn: "What is indicated by ABS system?", qNp: "सवारी साधनको ABS प्रणालीले के बुझाउँछ?", optA_En: "Anti-lock Braking System", optA_Np: "एन्टी-लक ब्रेकिङ सिस्टम", optB_En: "Active Battery Sensor", optB_Np: "एक्टिभ ब्याट्री सेन्सर", optC_En: "Air Bag Sensor", optC_Np: "एयर ब्याग सेन्सर", optD_En: "Automatic Brake Shield", optD_Np: "अटोमेटिक ब्रेक सिल्ड", correct: "A" },
+        { category: "Traffic Sign", qEn: "A pedestrian crosswalk is marked with?", qNp: "पैदलयात्री क्रसिङ के चिन्हले अंकित गरिन्छ?", optA_En: "Zebra stripes (white and black)", optA_Np: "जेब्रा क्रसिङ धर्काहरू", optB_En: "Yellow circle dots", optB_Np: "पहेंलो गोलो थोप्लाहरू", optC_En: "Green block marks", optC_Np: "हरियो ब्लकहरू", optD_En: "No marks are needed", optD_Np: "कुनै चिन्ह चाहिँदैन", correct: "A" },
+        { category: "Road Rule", qEn: "Which horn use is permitted near hospital?", qNp: "अस्पताल नजिक कस्तो हर्न बजाउन पाइन्छ?", optA_En: "Strictly prohibited to use horn", optA_Np: "हर्न बजाउन पूर्ण निषेध", optB_En: "Intermittent horns", optB_Np: "छोटो हर्न", optC_En: "Permitted with low tone", optC_Np: "मधुर स्वरको हर्न", optD_En: "Continuous high pressure horns", optD_Np: "ठूलो दबाबको हर्न", correct: "A" },
+        { category: "Law", qEn: "Fine for driving high-beam horn inside city is?", qNp: "सहरभित्र प्रेसर हर्न बजाउँदा कति जरिवाना हुन्छ?", optA_En: "NRs. 500 to 1500", optA_Np: "रु ५०० देखि १५०० सम्म", optB_En: "NRs. 50 to 100", optB_Np: "रु ५० देखि १००", optC_En: "No penalty fees", optC_Np: "कुनै जरिवाना लाग्दैन", optD_En: "Cancellation of license card", optD_Np: "लाइसेन्स रद्द", correct: "A" },
+        { category: "Vehicle Knowledge", qEn: "What happens if tire pressure is too low?", qNp: "टायरमा हावाको चाप कम हुँदा के हुन्छ?", optA_En: "Poor fuel economy and fast wear", optA_Np: "बढी इन्धन खपत र टायर चाँडै खिइने", optB_En: "Increases high maximum speed limit", optB_Np: "अधिकतम गति बढ्ने", optC_En: "Reduces vehicle suspension noise", optC_Np: "सस्पेन्सनको आवाज घट्ने", optD_En: "Improves cornering response", optD_Np: "मोड सुधार गर्ने", correct: "A" }
+    ];
+
+    // Map seeded array objects into Set B
+    mockSeed.forEach((seed, offsetIdx) => {
+        questionDB.push({
+            id: Date.now() + offsetIdx,
+            set: "Set B",
+            category: seed.category,
+            qEn: seed.qEn,
+            qNp: seed.qNp,
+            optA_En: seed.optA_En,
+            optA_Np: seed.optA_Np,
+            optB_En: seed.optB_En,
+            optB_Np: seed.optB_Np,
+            optC_En: seed.optC_En,
+            optC_Np: seed.optC_Np,
+            optD_En: seed.optD_En,
+            optD_Np: seed.optD_Np,
+            correct: seed.correct
+        });
+    });
+
+    currentSet = "Set B";
+    updateDiagnostics();
+    renderSetPills();
+    updateSetStatusCard();
+    renderQuestionList();
+    alert("Successfully seeded 20 questions into Set B!");
+});
+
+// Launch Exam Simulator Session
+const launchSimulator = () => {
+    simQuestions = questionDB.filter(q => q.set === currentSet).slice(0, 20);
+    if (simQuestions.length < 20) {
+        alert("Exam simulator requires exactly 20 questions in the current active Set!");
+        return;
+    }
+
+    simActive = true;
+    simIndex = 0;
+    simCorrectCount = 0;
+    simTitle.innerText = `${currentSet} - Licensing Exam Practice`;
+    simModal.style.display = "flex";
+    loadSimulatorQuestion();
+};
+
+const loadSimulatorQuestion = () => {
+    if (simIndex >= 20) {
+        // Exam Finished! Show feedback
+        const percentage = (simCorrectCount / 20) * 100;
+        let passStatus = percentage >= 80 ? "PASSED (पास)" : "FAILED (अनुत्तीर्ण)";
+        let feedbackColor = percentage >= 80 ? "var(--tertiary)" : "var(--error)";
+        
+        simCounter.innerText = "Exam Completed!";
+        simProgressBar.style.width = "100%";
+        simScore.innerText = `Final Score: ${simCorrectCount} / 20 (${percentage}%)`;
+        
+        simQEn.innerHTML = `<span style="color: ${feedbackColor}; font-size: 20px; font-weight: bold;">${passStatus}</span>`;
+        simQNp.innerText = `You answered ${simCorrectCount} questions correctly. 16/20 (80%) is required to pass under DOTM licensing rules.`;
+        
+        simOptionsContainer.innerHTML = "";
+        simFeedback.innerHTML = "";
+        simNextBtn.style.display = "none";
+        return;
+    }
+
+    const q = simQuestions[simIndex];
+    simCounter.innerText = `Question ${simIndex + 1} of 20`;
+    simProgressBar.style.width = `${(simIndex / 20) * 100}%`;
+    simScore.innerText = `Score: ${simCorrectCount} / ${simIndex}`;
+
+    simQEn.innerText = q.qEn;
+    simQNp.innerText = q.qNp;
+    simFeedback.innerText = "";
+    simNextBtn.style.display = "none";
+
+    simOptionsContainer.innerHTML = "";
+    const options = [
+        { key: "A", en: q.optA_En, np: q.optA_Np },
+        { key: "B", en: q.optB_En, np: q.optB_Np },
+        { key: "C", en: q.optC_En, np: q.optC_Np },
+        { key: "D", en: q.optD_En, np: q.optD_Np }
+    ];
+
+    options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "sim-option-btn";
+        btn.innerHTML = `<strong>${opt.key}:</strong> ${opt.en} / ${opt.np}`;
+        btn.addEventListener("click", () => handleSimAnswer(btn, opt.key, q.correct));
+        simOptionsContainer.appendChild(btn);
+    });
+};
+
+const handleSimAnswer = (selectedBtn, selectedKey, correctKey) => {
+    // Disable other buttons
+    const btns = simOptionsContainer.querySelectorAll(".sim-option-btn");
+    btns.forEach(b => b.disabled = true);
+
+    if (selectedKey === correctKey) {
+        selectedBtn.className = "sim-option-btn selected-correct";
+        simFeedback.innerHTML = `<span style="color: var(--tertiary);">Correct Answer (सही उत्तर)!</span>`;
+        simCorrectCount++;
+    } else {
+        selectedBtn.className = "sim-option-btn selected-wrong";
+        // Highlight correct option
+        btns.forEach(b => {
+            if (b.innerText.startsWith(correctKey + ":")) {
+                b.className = "sim-option-btn selected-correct";
+            }
+        });
+        simFeedback.innerHTML = `<span style="color: var(--error);">Incorrect. Correct answer was Option ${correctKey}.</span>`;
+    }
+
+    simNextBtn.style.display = "block";
+};
+
+simNextBtn.addEventListener("click", () => {
+    simIndex++;
+    loadSimulatorQuestion();
+});
+
+closeSimBtn.addEventListener("click", () => {
+    simModal.style.display = "none";
+    simActive = false;
+});
+
+examSimulatorBtn.addEventListener("click", launchSimulator);
+
+// INITIALIZATION
+window.onload = function () {
+    updateDiagnostics();
+    renderSetPills();
+    updateSetStatusCard();
+    renderQuestionList();
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "License Sathi",
+  "description": "Nepal Driving Licence Written and Trial Exam Preparation App (Study, Practice, Mock Exam, Progress Tracker & Admin dynamic CMS).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

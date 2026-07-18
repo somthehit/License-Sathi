@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="en" class="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-tertiary-fixed-variant": "#544600",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#e9c400",
+                    "secondary": "#335ab4",
+                    "on-primary-fixed-variant": "#920022",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f6f3f2",
+                    "on-background": "#1c1b1b",
+                    "on-primary-fixed": "#40000a",
+                    "secondary-fixed": "#dae1ff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#221b00",
+                    "primary-container": "#dc143c",
+                    "on-tertiary-container": "#4c3f00",
+                    "inverse-surface": "#313030",
+                    "surface-tint": "#bf0030",
+                    "surface-container-high": "#eae7e7",
+                    "surface-bright": "#fcf9f8",
+                    "on-secondary-container": "#003387",
+                    "secondary-container": "#7da0ff",
+                    "background": "#fcf9f8",
+                    "inverse-primary": "#ffb3b3",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#705d00",
+                    "outline-variant": "#e6bdbc",
+                    "surface-variant": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#12419b",
+                    "tertiary-fixed": "#ffe16d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface": "#fcf9f8",
+                    "outline": "#916f6e",
+                    "on-primary-container": "#fff1f0",
+                    "on-surface-variant": "#5c3f3f",
+                    "primary": "#b1002c",
+                    "surface-container": "#f0eded",
+                    "on-secondary-fixed": "#001849",
+                    "tertiary-container": "#c9a900",
+                    "secondary-fixed-dim": "#b3c5ff",
+                    "surface-dim": "#dcd9d9",
+                    "primary-fixed": "#ffdad9",
+                    "on-surface": "#1c1b1b",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#ffb3b3",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "20px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "sm": "8px",
+                    "xl": "32px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-sm": ["Inter"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script><meta charset="utf-8"></head><body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- Side Navigation Shell -->
+<aside class="bg-surface-container-low dark:bg-surface-container-lowest font-body-md text-body-md h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline flex flex-col h-full p-md gap-sm z-50">
+<div class="mb-xl px-sm">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">License Sathi</h1>
+<p class="text-body-sm text-on-surface-variant">Admin Console</p>
+</div>
+<nav class="flex-1 flex flex-col gap-xs">
+<a href="#" class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors rounded-lg group">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="">Dashboard</span>
+</a>
+<a href="#" class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors rounded-lg group">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="">Question Bank</span>
+</a>
+<a href="#" class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors rounded-lg group">
+<span class="material-symbols-outlined">library_books</span>
+<span class="">Study Library</span>
+</a>
+<a href="#" class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors rounded-lg group">
+<span class="material-symbols-outlined">group</span>
+<span class="">Users</span>
+</a>
+<a href="#" class="flex items-center gap-md px-md py-sm text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high transition-colors rounded-lg group">
+<span class="material-symbols-outlined">analytics</span>
+<span class="">Analytics</span>
+</a>
+<a href="#" class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container dark:bg-secondary dark:text-on-secondary rounded-lg font-bold">
+<span class="material-symbols-outlined">settings</span>
+<span class="">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-md px-sm flex items-center gap-md">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a female administrator with a friendly expression, wearing business casual attire. The background is a brightly lit, modern office space in Kathmandu with soft natural light. The photograph is high-quality with shallow depth of field, highlighting her professional role in License Sathi admin console." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpFThRHZbJTGv3n4RSqaBn6PiaKt720GpNB29LOGRLgUNTJk4MQIw5fTZo_BE3SlYpkTiWwi_CeJA9DHPgf_9VqwZaNc1IQ0FRM2Xeun2hcfYbObQTvfoQVcsQEjCzhhiXQ6UW-MMK1RWhDLwfbPI_Y2V5BXTdoJ_CAZ1ewxYKYrqJJzrYXZ_r0spvQI6XqTURJud54iDxlcY6l6n6EZf2KU3Wg1yB90wOsiSxIBDNOffbJuyevqVW">
+<div>
+<p class="text-label-md font-bold">Admin Sathi</p>
+<p class="text-[12px] text-on-surface-variant">System Administrator</p>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="bg-surface dark:bg-surface-dim fixed top-0 right-0 w-[calc(100%-16rem)] h-16 border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none z-40">
+<div class="flex justify-between items-center px-xl w-full h-full">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-secondary text-body-sm" placeholder="Search settings..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">help_outline</button>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<button class="bg-primary text-on-primary px-lg py-2 rounded-xl font-label-md hover:opacity-90 transition-opacity">Save Changes</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 p-xl min-h-screen">
+<div class="max-w-6xl mx-auto">
+<header class="mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface">System Settings</h2>
+<p class="text-on-surface-variant font-body-md">Configure global application parameters and security protocols.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Settings Navigation Rail (Bento style sidebar) -->
+<nav class="lg:col-span-3 flex flex-col gap-sm">
+<button class="flex items-center gap-md px-md py-sm bg-surface-container-high rounded-xl text-primary font-bold text-left transition-all hover:translate-x-1" onclick="scrollToSection('general')">
+<span class="material-symbols-outlined">tune</span>
+<span class="">General Settings</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low rounded-xl text-left transition-all hover:translate-x-1" onclick="scrollToSection('security')">
+<span class="material-symbols-outlined">security</span>
+<span class="">Security &amp; Auth</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low rounded-xl text-left transition-all hover:translate-x-1" onclick="scrollToSection('notifications')">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="">Notifications</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low rounded-xl text-left transition-all hover:translate-x-1" onclick="scrollToSection('localization')">
+<span class="material-symbols-outlined">language</span>
+<span class="">Localization</span>
+</button>
+<button class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-low rounded-xl text-left transition-all hover:translate-x-1" onclick="scrollToSection('database')">
+<span class="material-symbols-outlined">database</span>
+<span class="">Database &amp; Backups</span>
+</button>
+</nav>
+<!-- Settings Content Panels -->
+<div class="lg:col-span-9 flex flex-col gap-lg pb-24">
+<!-- General Settings -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl shadow-sm" id="general">
+<div class="flex items-center gap-md mb-lg">
+<span class="material-symbols-outlined text-primary p-sm bg-primary-fixed rounded-lg">tune</span>
+<h3 class="font-headline-sm text-headline-sm">General Settings</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Application Name</label>
+<input class="w-full p-md border border-outline rounded-xl focus:border-primary focus:ring-0 outline-none transition-colors" type="text" value="License Sathi">
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Support Email</label>
+<input class="w-full p-md border border-outline rounded-xl focus:border-primary focus:ring-0 outline-none transition-colors" type="email" value="support@licensesathi.com.np">
+</div>
+<div class="col-span-1 md:col-span-2 p-md bg-surface-container-low rounded-xl flex items-center justify-between">
+<div>
+<p class="font-bold text-on-surface">Maintenance Mode</p>
+<p class="text-body-sm text-on-surface-variant">Disables app access for regular users during updates.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox">
+<div class="w-11 h-6 bg-outline rounded-full toggle-bg transition-colors duration-200">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</label>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Version Control</label>
+<div class="flex gap-sm">
+<input class="flex-1 p-md bg-surface-container-low border border-outline-variant rounded-xl text-on-surface-variant italic" disabled="" type="text" value="v2.4.1-stable">
+<button class="px-md py-md bg-secondary text-on-secondary rounded-xl font-label-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Check Updates</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Security & Authentication -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl shadow-sm" id="security"><div class="flex items-center gap-md mb-lg">
+<span class="material-symbols-outlined text-primary p-sm bg-primary-fixed rounded-lg">security</span>
+<h3 class="font-headline-sm text-headline-sm">Security &amp; Authentication</h3>
+</div>
+<div class="flex flex-col gap-xl">
+<!-- Existing 2FA -->
+<div class="p-md border border-outline-variant rounded-xl flex items-start gap-md">
+<div class="flex-1">
+<p class="font-bold text-on-surface">2FA Enforcement</p>
+<p class="text-body-sm text-on-surface-variant">Require all administrative accounts to use Two-Factor Authentication via Google Authenticator or SMS.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer mt-1">
+<input checked="" class="sr-only toggle-switch" type="checkbox">
+<div class="w-11 h-6 bg-outline rounded-full toggle-bg transition-colors duration-200">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</label>
+</div>
+
+<!-- Login Security Subsection -->
+<div class="space-y-md">
+<h4 class="text-label-md font-bold text-primary uppercase tracking-wider">Login Security</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="flex flex-col gap-sm">
+<div class="flex items-center justify-between mb-xs">
+<label class="text-label-md font-bold text-on-surface-variant">IP Whitelisting</label>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox">
+<div class="w-11 h-6 bg-outline rounded-full toggle-bg transition-colors duration-200">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</label>
+</div>
+<textarea class="w-full p-md border border-outline rounded-xl focus:border-primary focus:ring-0 outline-none transition-colors text-body-sm" placeholder="Enter IP addresses (one per line)" rows="3"></textarea>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Max Login Attempts</label>
+<input class="w-full p-md border border-outline rounded-xl focus:border-primary outline-none transition-colors" type="number" value="5">
+<p class="text-[12px] text-on-surface-variant">Account will be locked after consecutive failed attempts.</p>
+</div>
+</div>
+</div>
+
+<!-- Existing Policies -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Admin Password Policy</label>
+<select class="w-full p-md border border-outline rounded-xl focus:border-primary outline-none bg-surface">
+<option>Strict (12+ characters, symbols)</option>
+<option>Standard (8+ characters)</option>
+<option>Custom Policy</option>
+</select>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Session Timeout (Minutes)</label>
+<input class="w-full p-md border border-outline rounded-xl focus:border-primary outline-none transition-colors" type="number" value="30">
+</div>
+</div>
+
+<!-- Audit & Logs Subsection -->
+<div class="pt-md border-t border-outline-variant">
+<h4 class="text-label-md font-bold text-primary uppercase tracking-wider mb-md">Audit &amp; Logs</h4>
+<div class="flex flex-wrap items-center justify-between gap-md">
+<button class="px-lg py-md border border-outline text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined">history</span>
+<span class="">Security Audit Log</span>
+</button>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<div class="text-right">
+<p class="text-[12px] font-bold">Last Security Scan</p>
+<p class="text-body-sm">May 24, 2024 - 10:15 AM</p>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+<!-- Notification Settings -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl shadow-sm" id="notifications">
+<div class="flex items-center gap-md mb-lg">
+<span class="material-symbols-outlined text-primary p-sm bg-primary-fixed rounded-lg">notifications_active</span>
+<h3 class="font-headline-sm text-headline-sm">Notification Settings</h3>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-md border-b border-outline-variant">
+<div>
+<p class="font-bold text-on-surface">Critical System Alerts</p>
+<p class="text-body-sm text-on-surface-variant">Email notifications for server issues or security breaches.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-switch" type="checkbox">
+<div class="w-11 h-6 bg-outline rounded-full toggle-bg transition-colors duration-200">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-between p-md border-b border-outline-variant">
+<div>
+<p class="font-bold text-on-surface">New User Registrations</p>
+<p class="text-body-sm text-on-surface-variant">Daily digest of new signups and profile verifications.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-switch" type="checkbox">
+<div class="w-11 h-6 bg-outline rounded-full toggle-bg transition-colors duration-200">
+<div class="toggle-dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform duration-200"></div>
+</div>
+</label>
+</div>
+<div class="flex items-center justify-between p-md">
+<div>
+<p class="font-bold text-on-surface">Push Notification API</p>
+<p class="text-body-sm text-on-surface-variant">FCM (Firebase Cloud Messaging) integration status.</p>
+</div>
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed rounded-full text-[12px] font-bold">ACTIVE</span>
+</div>
+</div>
+</section>
+<!-- Localization & Region -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl shadow-sm" id="localization">
+<div class="flex items-center gap-md mb-lg">
+<span class="material-symbols-outlined text-primary p-sm bg-primary-fixed rounded-lg">language</span>
+<h3 class="font-headline-sm text-headline-sm">Localization &amp; Region</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl mb-lg">
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Default App Language</label>
+<select class="w-full p-md border border-outline rounded-xl focus:border-primary outline-none bg-surface">
+<option>Nepali (नेपाली)</option>
+<option selected="">English (International)</option>
+</select>
+</div>
+<div class="flex flex-col gap-sm">
+<label class="text-label-md font-bold text-on-surface-variant">Date/Time Format</label>
+<select class="w-full p-md border border-outline rounded-xl focus:border-primary outline-none bg-surface">
+<option>DD/MM/YYYY (24h)</option>
+<option>MM/DD/YYYY (12h)</option>
+<option class="">YYYY-MM-DD (ISO)</option>
+</select>
+</div>
+</div>
+<div class="p-md bg-secondary-fixed text-on-secondary-fixed rounded-xl border-l-4 border-secondary">
+<div class="flex gap-md">
+<span class="material-symbols-outlined">info</span>
+<div class="flex-1">
+<p class="font-bold">Nepal Region Rules</p>
+<p class="text-body-sm">Exam simulations are strictly following DOTM Nepal 2024 revised categories (A, B, C, K).</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Database & Backups -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl shadow-sm" id="database">
+<div class="flex items-center gap-md mb-lg">
+<span class="material-symbols-outlined text-primary p-sm bg-primary-fixed rounded-lg">database</span>
+<h3 class="font-headline-sm text-headline-sm">Database &amp; Backups</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl mb-xl">
+<div class="p-lg bg-surface-container rounded-xl border border-outline-variant">
+<p class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider mb-sm">Automated Backups</p>
+<div class="flex items-center justify-between mb-md">
+<span class="text-headline-sm font-bold">Daily at 02:00 AM</span>
+<span class="material-symbols-outlined text-on-tertiary-container">schedule</span>
+</div>
+<button class="w-full py-md border border-outline text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-colors">Adjust Frequency</button>
+</div>
+<div class="p-lg bg-primary-container text-on-primary-container rounded-xl flex flex-col justify-between">
+<div>
+<p class="text-label-md font-bold uppercase tracking-wider mb-sm">Instant Recovery</p>
+<p class="text-body-sm opacity-90 mb-md">Trigger a full system backup now to secure current data.</p>
+</div>
+<button class="w-full py-md bg-white text-primary font-bold rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-95">Backup Now</button>
+</div>
+</div>
+<div class="border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-md py-sm bg-surface-container-high border-b border-outline-variant flex justify-between items-center">
+<span class="text-label-md font-bold">System Health Logs</span>
+<span class="text-[12px] text-on-surface-variant">Last 5 activities</span>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="p-md flex items-center gap-md">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex-1">
+<p class="text-body-sm font-bold">Daily Backup Successful</p>
+<p class="text-[12px] text-on-surface-variant">May 24, 2024 - 02:00:14</p>
+</div>
+<span class="text-[12px] opacity-50">12h ago</span>
+</div>
+<div class="p-md flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">sync</span>
+<div class="flex-1">
+<p class="text-body-sm font-bold">Question Bank Re-indexed</p>
+<p class="text-[12px] text-on-surface-variant">May 23, 2024 - 18:45:00</p>
+</div>
+<span class="text-[12px] opacity-50">1d ago</span>
+</div>
+<div class="p-md flex items-center gap-md">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex-1">
+<p class="text-body-sm font-bold">Database Migration Completed</p>
+<p class="text-[12px] text-on-surface-variant">May 22, 2024 - 11:20:33</p>
+</div>
+<span class="text-[12px] opacity-50">2d ago</span>
+</div>
+</div>
+<button class="w-full py-sm bg-surface-container text-primary text-[12px] font-bold hover:bg-surface-container-high transition-colors">View All Logs</button>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Action Bar (Sticky Mobile/Responsive) -->
+<div class="fixed bottom-0 right-0 w-[calc(100%-16rem)] p-md bg-surface border-t border-outline-variant z-40 lg:flex justify-end hidden">
+<div class="flex gap-md">
+<button class="px-xl py-md text-on-surface-variant font-bold hover:bg-surface-container transition-colors rounded-xl">Discard Changes</button>
+<button class="px-xl py-md bg-primary text-on-primary font-bold rounded-xl shadow-lg hover:shadow-primary/40 transition-all active:scale-95">Save All Settings</button>
+</div>
+</div>
+<script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            const offset = 100;
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // Update active state in nav
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => {
+                btn.classList.remove('bg-surface-container-high', 'text-primary', 'font-bold');
+                btn.classList.add('text-on-surface-variant');
+            });
+            event.currentTarget.classList.add('bg-surface-container-high', 'text-primary', 'font-bold');
+            event.currentTarget.classList.remove('text-on-surface-variant');
+        }
+
+        // Auto-scroll spy logic could be added here for a better UX
+    </script>
+
+</body></html>
