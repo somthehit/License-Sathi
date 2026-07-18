@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Layout from '@/components/Layout';
@@ -284,6 +284,14 @@ function LivePreview({ image, titleEn, descEn }: { image: string | null; titleEn
 }
 
 export default function AddStudyMaterialPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <AddStudyMaterialForm />
+    </Suspense>
+  );
+}
+
+function AddStudyMaterialForm() {
   const router       = useRouter();
   const searchParams = useSearchParams();
   const editId       = searchParams.get('edit');
