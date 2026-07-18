@@ -46,3 +46,5 @@ scripts/seed-admin.json
 
 # Firebase service account keys
 scripts/*.json
+
+.vercel
