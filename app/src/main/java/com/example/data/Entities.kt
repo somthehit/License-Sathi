@@ -134,3 +134,22 @@ data class Badge(
 ) {
   fun getName(lang: String): String = if (lang == "np") nameNp else nameEn
 }
+
+@Entity(tableName = "video_guides")
+data class VideoGuide(
+  @PrimaryKey val id: Int = 0,
+  val topic: String = "",
+  val titleNp: String,
+  val titleEn: String,
+  val descriptionNp: String,
+  val descriptionEn: String,
+  val videoUrl: String,
+  val localPath: String? = null,
+  val isWatched: Boolean = false,
+  val durationSeconds: Int = 0,
+  val category: String = "ALL",    // Firestore field (replaces categoryId for sync)
+  val isPublished: Boolean = true  // Mirrors Firestore isPublished flag
+) {
+  fun getTitle(lang: String): String = if (lang == "np") titleNp else titleEn
+  fun getDescription(lang: String): String = if (lang == "np") descriptionNp else descriptionEn
+}

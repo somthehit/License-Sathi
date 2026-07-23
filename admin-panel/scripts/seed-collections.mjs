@@ -23,7 +23,7 @@ try {
     if (!trimmed || trimmed.startsWith('#')) continue;
     const eqIdx = trimmed.indexOf('=');
     if (eqIdx === -1) continue;
-    const key   = trimmed.slice(0, eqIdx).trim();
+    const key = trimmed.slice(0, eqIdx).trim();
     const value = trimmed.slice(eqIdx + 1).trim();
     if (!process.env[key]) process.env[key] = value;
   }
@@ -51,8 +51,8 @@ const { initializeApp, cert } = await import('firebase-admin/app');
 const { getFirestore, FieldValue } = await import('firebase-admin/firestore');
 
 const app = initializeApp({ credential: cert(serviceAccount), projectId });
-const db  = getFirestore(app);
-const ts  = () => FieldValue.serverTimestamp();
+const db = getFirestore(app);
+const ts = () => FieldValue.serverTimestamp();
 
 // Track writes per collection
 const summary = {};
@@ -730,7 +730,17 @@ const materials = [
     descNp: 'सुरक्षित र सन्तुलित रूपमा मोटरसाइकल रोक्नको लागि सधैं अगाडि र पछाडिको ब्रेक एकैसाथ प्रयोग गर्नुपर्दछ।',
     imageUrl: null, sectionId: 'SEC-VK-09', dotmRef: 'DOTM-VK-09',
     status: 'Published', createdBy: adminUid, createdAt: ts(), updatedAt: ts(),
+  },
+  {
+    id: 'sm-vk-010', code: 'VK-010', contentType: 'Vehicle Knowledge',
+    vehicleCategory: 'A', difficulty: 'Easy',
+    titleEn: 'Motorcycle Brake Usage', titleNp: 'मोटरसाइकलमा ब्रेकको प्रयोग',
+    descEn: 'For safe and balanced stopping, always apply both the front and rear brakes simultaneously on a motorcycle.',
+    descNp: 'सुरक्षित र सन्तुलित रूपमा मोटरसाइकल रोक्नको लागि सधैं अगाडि र पछाडिको ब्रेक एकैसाथ प्रयोग गर्नुपर्दछ।',
+    imageUrl: null, sectionId: 'SEC-VK-09', dotmRef: 'DOTM-VK-09',
+    status: 'Published', createdBy: adminUid, createdAt: ts(), updatedAt: ts(),
   }
+
 ];
 for (const { id, ...data } of materials) {
   await db.collection('study_materials').doc(id).set(data, { merge: true });
@@ -813,7 +823,56 @@ await db.collection('app_settings').doc('config').set({
 console.log('  ✔ app_settings/config');
 track('app_settings');
 
+// ── 9. admin_api_keys ─────────────────────────────────────────────────────────
+console.log('── admin_api_keys ──────────────────────────────');
+const apiKeyServices = ['openai', 'gemini', 'anthropic', 'admob'];
+for (const service of apiKeyServices) {
+  await db.collection('admin_api_keys').doc(service).set({
+    service,
+    is_configured: false,
+    encrypted_key: null,
+    updated_at: null,
+    updated_by: null,
+    note: `Set your ${service.toUpperCase()} API key from the Admin Panel → Settings → API Keys`,
+  }, { merge: true });
+  console.log(`  ✔ admin_api_keys/${service}`);
+  track('admin_api_keys');
+}
+
+// ── 10. system_prompts ────────────────────────────────────────────────────────
+console.log('── system_prompts ──────────────────────────────');
+const systemPrompts = [
+  {
+    id: 'ask-expert-v1',
+    name: 'ask_expert_system_prompt',
+    version: 'v1',
+    is_active: true,
+    created_at: new Date().toISOString(),
+    prompt_text: `You are License Sathi's AI driving expert assistant, specializing in Nepal's traffic laws, road signs, and vehicle regulations as defined by the Department of Transport Management (DoTM).
+
+Your role:
+- Answer questions clearly and accurately in the same language the user asks (Nepali or English).
+- Base your answers ONLY on the provided context from the knowledge base.
+- If the context does not contain enough information, say "I don't have specific information on that, please consult the DoTM website or a licensed driving instructor."
+- Keep answers concise and practical — users are preparing for their driving license exam.
+- Format answers with bullet points when listing rules or steps.
+- Always be polite and encouraging.
+
+Context from knowledge base:
+{context}
+
+User's question:
+{question}`,
+  },
+];
+for (const { id, ...data } of systemPrompts) {
+  await db.collection('system_prompts').doc(id).set(data, { merge: true });
+  console.log(`  ✔ system_prompts/${id}`);
+  track('system_prompts');
+}
+
 // ── Summary ───────────────────────────────────────────────────────────────────
+
 console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 console.log('  Collection           Docs Written');
 console.log('  ─────────────────── ────────────');

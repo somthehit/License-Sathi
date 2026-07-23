@@ -81,6 +81,25 @@ interface AppDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun saveUserProgress(progress: UserProgress)
 
+  // VideoGuides
+  @Query("SELECT * FROM video_guides WHERE isPublished = 1 ORDER BY id ASC")
+  fun getAllVideoGuides(): Flow<List<VideoGuide>>
+
+  @Query("SELECT * FROM video_guides WHERE category = :category AND isPublished = 1 ORDER BY id ASC")
+  fun getVideoGuidesForCategory(category: String): Flow<List<VideoGuide>>
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insertVideoGuide(video: VideoGuide)
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insertVideoGuides(videos: List<VideoGuide>)
+
+  @Update
+  suspend fun updateVideoGuide(video: VideoGuide)
+
+  @Query("DELETE FROM video_guides WHERE id = :id")
+  suspend fun deleteVideoGuideById(id: Int)
+
   // Attempts
   @Query("SELECT * FROM attempts ORDER BY completedAt DESC")
   fun getAllAttempts(): Flow<List<Attempt>>

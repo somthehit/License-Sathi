@@ -19,6 +19,9 @@ interface Material {
   titleEn: string;
   titleNp: string;
   descEn: string;
+  descNp?: string;
+  sectionId?: string;
+  dotmRef?: string;
   imageUrl?: string;
   status: string;
   createdAt?: { _seconds: number };
@@ -148,21 +151,22 @@ export default function StudyLibraryPage() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-3 gap-5 mb-5">
+        <div className="grid grid-cols-1 gap-5 mb-5">
           {loading ? (
             // Skeleton cards
-            [1,2,3,4,5,6].map(i => (
-              <div key={i} style={{ backgroundColor: '#fff', border: '1px solid #e6bdbc', borderRadius: 16 }} className="overflow-hidden animate-pulse">
-                <div style={{ backgroundColor: '#f0eded', height: 140 }} />
-                <div className="p-4">
-                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 14, width: '70%', marginBottom: 8 }} />
-                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 10, width: '50%', marginBottom: 8 }} />
-                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 10, width: '90%' }} />
+            [1,2,3,4].map(i => (
+              <div key={i} style={{ backgroundColor: '#fff', border: '1px solid #e6bdbc', borderRadius: 12 }} className="overflow-hidden animate-pulse flex flex-col md:flex-row">
+                <div style={{ backgroundColor: '#f0eded', minWidth: 140, minHeight: 120 }} className="border-b md:border-b-0 md:border-r border-[#e6bdbc]" />
+                <div className="p-3 flex-1">
+                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 14, width: '40%', marginBottom: 12 }} />
+                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 10, width: '30%', marginBottom: 16 }} />
+                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 10, width: '90%', marginBottom: 8 }} />
+                  <div style={{ backgroundColor: '#f0eded', borderRadius: 4, height: 10, width: '80%' }} />
                 </div>
               </div>
             ))
           ) : materials.length === 0 ? (
-            <div className="col-span-3 py-16 text-center">
+            <div className="col-span-1 py-16 text-center">
               <span className="material-symbols-outlined text-5xl text-[#e6bdbc] mb-3 block" style={{ fontVariationSettings: "'FILL' 1" }}>library_books</span>
               <p className="text-sm font-bold text-[#1c1b1b]">No materials found</p>
               <p className="text-xs text-[#5c3f3f] mt-1">Try adjusting filters or add new study material.</p>
@@ -175,44 +179,69 @@ export default function StudyLibraryPage() {
                 const diffBg    = DIFF_BG[m.difficulty]    ?? '#f0eded';
                 const icon      = TYPE_ICON[m.contentType] ?? 'article';
                 return (
-                  <div key={m.id} style={{ backgroundColor: '#fff', border: '1px solid #e6bdbc', borderRadius: 16 }} className="overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                  <div key={m.id} style={{ backgroundColor: '#fff', border: '1px solid #e6bdbc', borderRadius: 12 }} className="flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                     {/* Card image / icon area */}
-                    <div style={{ backgroundColor: '#f6f3f2', height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', borderBottom: '1px solid #e6bdbc' }}>
+                    <div style={{ backgroundColor: '#f6f3f2', minWidth: '160px', minHeight: '120px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }} className="border-b md:border-b-0 md:border-r border-[#e6bdbc]">
                       {m.imageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={m.imageUrl} alt={m.titleEn} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
-                        <span className="material-symbols-outlined text-6xl text-[#e6bdbc]" style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
+                        <span className="material-symbols-outlined text-4xl text-[#e6bdbc]" style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
                       )}
-                      <div className="absolute top-2 left-2">
-                        <span style={{ backgroundColor: '#f6f3f2', border: '1px solid #e6bdbc', borderRadius: 4, color: P, fontSize: 10, fontWeight: 700, padding: '2px 7px' }}>{m.code}</span>
-                      </div>
-                      <div className="absolute top-2 right-2">
-                        <span style={{ color: isPublished ? '#16a34a' : '#5c3f3f', fontSize: 10, fontWeight: 700, backgroundColor: isPublished ? '#dcfce7' : '#f0eded', borderRadius: 4, padding: '2px 7px' }}>{m.status.toUpperCase()}</span>
-                      </div>
                     </div>
 
                     {/* Card body */}
-                    <div className="p-4">
-                      <div className="flex justify-between items-start mb-1">
-                        <h4 className="font-display font-bold text-sm text-[#1c1b1b] line-clamp-1">{m.titleEn}</h4>
-                        <span style={{ backgroundColor: diffBg, color: diffColor, fontSize: 10, fontWeight: 700, borderRadius: 99, padding: '2px 8px', flexShrink: 0, marginLeft: 4 }}>{m.difficulty}</span>
+                    <div className="p-3 flex-1 flex flex-col">
+                      <div className="flex flex-col md:flex-row justify-between items-start gap-1 mb-1">
+                        <div className="w-full">
+                           <div className="flex flex-wrap items-center gap-2 mb-1">
+                             <span style={{ backgroundColor: '#f6f3f2', border: '1px solid #e6bdbc', borderRadius: 4, color: P, fontSize: 10, fontWeight: 700, padding: '2px 6px' }}>{m.code}</span>
+                             <span style={{ color: isPublished ? '#16a34a' : '#5c3f3f', fontSize: 10, fontWeight: 700, backgroundColor: isPublished ? '#dcfce7' : '#f0eded', borderRadius: 4, padding: '2px 6px' }}>{m.status.toUpperCase()}</span>
+                             <span style={{ backgroundColor: diffBg, color: diffColor, fontSize: 10, fontWeight: 700, borderRadius: 99, padding: '2px 8px' }}>{m.difficulty}</span>
+                             {m.vehicleCategory && (
+                                <span style={{ backgroundColor: '#f0eded', color: '#5c3f3f', fontSize: 10, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>{m.vehicleCategory}</span>
+                             )}
+                           </div>
+                           <h4 className="font-display font-bold text-base text-[#1c1b1b] leading-tight">{m.titleEn}</h4>
+                           <p className="text-sm font-semibold text-[#b1002c] leading-tight">{m.titleNp}</p>
+                        </div>
                       </div>
-                      <p className="text-xs font-semibold mb-2 line-clamp-1" style={{ color: P }}>{m.titleNp}</p>
-                      <p className="text-xs text-[#5c3f3f] leading-relaxed line-clamp-2">{m.descEn}</p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2 flex-1">
+                        <div>
+                          <p className="text-[10px] font-bold text-[#5c3f3f] mb-0 uppercase tracking-wider">English</p>
+                          <p className="text-[11px] text-[#1c1b1b] leading-tight">{m.descEn || '-'}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold text-[#5c3f3f] mb-0 uppercase tracking-wider">Nepali</p>
+                          <p className="text-[11px] text-[#1c1b1b] leading-tight">{m.descNp || '-'}</p>
+                        </div>
+                      </div>
+
+                      {(m.sectionId || m.dotmRef) && (
+                        <div className="flex flex-wrap gap-2 mb-2 bg-[#f6f3f2] px-2 py-1.5 rounded">
+                          {m.sectionId && (
+                            <p className="text-[11px] text-[#5c3f3f]"><strong>Sec ID:</strong> {m.sectionId}</p>
+                          )}
+                          {m.dotmRef && (
+                            <p className="text-[11px] text-[#5c3f3f]"><strong>DOTM Ref:</strong> {m.dotmRef}</p>
+                          )}
+                        </div>
+                      )}
 
                       {/* Actions */}
-                      <div style={{ borderTop: '1px solid #e6bdbc40', marginTop: 12, paddingTop: 12 }} className="flex items-center justify-between">
-                        <div className="flex gap-3">
-                          <Link href={`/study-library/add?edit=${m.id}`}>
-                            <span className="material-symbols-outlined text-base" style={{ color: S }}>edit</span>
+                      <div style={{ borderTop: '1px solid #e6bdbc40', marginTop: 'auto', paddingTop: 8 }} className="flex items-center justify-between">
+                        <div className="flex gap-4">
+                          <Link href={`/study-library/add?edit=${m.id}`} className="flex items-center gap-1 text-[13px] font-bold hover:opacity-80 transition-opacity" style={{ color: S }}>
+                            <span className="material-symbols-outlined text-sm">edit</span> Edit
                           </Link>
                         </div>
                         <button onClick={() => deleteMaterial(m.id)} disabled={deleting === m.id}
-                          className="disabled:opacity-40">
-                          <span className="material-symbols-outlined text-base" style={{ color: P }}>
+                          className="disabled:opacity-40 flex items-center gap-1 text-[13px] font-bold hover:opacity-80 transition-opacity" style={{ color: P }}>
+                          <span className="material-symbols-outlined text-sm">
                             {deleting === m.id ? 'progress_activity' : 'delete'}
                           </span>
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -222,14 +251,14 @@ export default function StudyLibraryPage() {
 
               {/* Add new card */}
               <Link href="/study-library/add"
-                style={{ border: '2px dashed #e6bdbc', borderRadius: 16, backgroundColor: '#f6f3f2', textDecoration: 'none', minHeight: 200 }}
-                className="flex flex-col items-center justify-center gap-3 hover:border-[#b1002c] hover:bg-[#ffdad9]/20 transition-colors group">
-                <div style={{ backgroundColor: '#fff', borderRadius: '50%', width: 48, height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                  <span className="material-symbols-outlined text-2xl text-[#5c3f3f] group-hover:text-[#b1002c] transition-colors">add</span>
+                style={{ border: '2px dashed #e6bdbc', borderRadius: 12, backgroundColor: '#f6f3f2', textDecoration: 'none', minHeight: 60 }}
+                className="flex flex-row items-center justify-center gap-3 hover:border-[#b1002c] hover:bg-[#ffdad9]/20 transition-colors group p-3">
+                <div style={{ backgroundColor: '#fff', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.08)' }}>
+                  <span className="material-symbols-outlined text-base text-[#5c3f3f] group-hover:text-[#b1002c] transition-colors">add</span>
                 </div>
-                <div className="text-center">
-                  <p className="text-sm font-bold text-[#1c1b1b]">Create New Entry</p>
-                  <p className="text-xs text-[#5c3f3f]">Add a new {activeTab.toLowerCase()}</p>
+                <div className="text-left">
+                  <h4 className="font-display font-bold text-sm text-[#1c1b1b] group-hover:text-[#b1002c] transition-colors">Add New Material</h4>
+                  <p className="text-sm text-[#5c3f3f]">Create a new traffic sign, road rule, or other study content.</p>
                 </div>
               </Link>
             </>

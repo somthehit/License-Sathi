@@ -16,6 +16,7 @@ class AppRepository(private val dao: AppDao, context: Context? = null) {
   val userProgressFlow: Flow<UserProgress?> = dao.getUserProgressFlow()
   val allAttempts: Flow<List<Attempt>> = dao.getAllAttempts()
   val allBadges: Flow<List<Badge>> = dao.getAllBadges()
+  val allVideoGuides: Flow<List<VideoGuide>> = dao.getAllVideoGuides()
 
   fun getQuestionsForCategory(categoryId: String): Flow<List<Question>> =
     dao.getQuestionsForCategory(categoryId)

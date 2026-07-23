@@ -18,9 +18,10 @@ import kotlinx.coroutines.launch
     FinePenalty::class,
     UserProgress::class,
     Attempt::class,
-    Badge::class
+    Badge::class,
+    VideoGuide::class
   ],
-  version = 5,
+  version = 7,
   exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -664,6 +665,35 @@ abstract class AppDatabase : RoomDatabase() {
         Attempt(mode = "Quiz", categoryId = "A", score = 70, totalQuestions = 10, passed = false, startedAt = System.currentTimeMillis() - 86400000 * 2, completedAt = System.currentTimeMillis() - 86400000 * 2 + 380000, topic = "Right of Way", correctAnswersCount = 7, userEmail = "mock_user")
       )
       initialAttempts.forEach { dao.insertAttempt(it) }
+
+      // 8. Video Guides
+      val videos = listOf(
+        VideoGuide(
+          id = 1,
+          topic = "Road Signs",
+          titleNp = "सडक सङ्केतहरू (पूर्ण गाइड)",
+          titleEn = "Road Signs (Full Guide)",
+          descriptionNp = "नेपालमा प्रयोग हुने प्रमुख सडक सङ्केतहरू बुझ्न यो भिडियो हेर्नुहोस्।",
+          descriptionEn = "Watch this video to understand the major road signs used in Nepal.",
+          videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          durationSeconds = 120,
+          category = "ALL",
+          isPublished = true
+        ),
+        VideoGuide(
+          id = 2,
+          topic = "Parking & Reversing",
+          titleNp = "पार्किङ र रिभर्स कसरी गर्ने?",
+          titleEn = "How to Park & Reverse?",
+          descriptionNp = "गाडी ब्याक गर्दा र पार्किङ गर्दा ध्यान दिनुपर्ने कुराहरू।",
+          descriptionEn = "Things to keep in mind while reversing and parking a vehicle.",
+          videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          durationSeconds = 300,
+          category = "ALL",
+          isPublished = true
+        )
+      )
+      dao.insertVideoGuides(videos)
     }
   }
 }

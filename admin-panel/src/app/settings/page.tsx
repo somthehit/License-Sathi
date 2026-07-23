@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import Layout from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
 
@@ -551,6 +552,29 @@ export default function SettingsPage() {
                   {s}
                 </button>
               ))}
+              
+              <div style={{ height: 1, backgroundColor: '#e6bdbc30', margin: '12px 0' }} />
+              
+              <Link href="/admin/settings/keys"
+                style={{ color: '#5c3f3f', borderRadius: 8, textDecoration: 'none' }}
+                className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-semibold text-left transition-colors hover:bg-[#f0eded]">
+                <span className="material-symbols-outlined text-base">key</span>
+                API Keys
+              </Link>
+              
+              <Link href="/admin/settings/flags"
+                style={{ color: '#5c3f3f', borderRadius: 8, textDecoration: 'none' }}
+                className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-semibold text-left transition-colors hover:bg-[#f0eded]">
+                <span className="material-symbols-outlined text-base">toggle_on</span>
+                Feature Flags
+              </Link>
+              
+              <Link href="/admin/prompts"
+                style={{ color: '#5c3f3f', borderRadius: 8, textDecoration: 'none' }}
+                className="flex items-center gap-2.5 w-full px-3 py-2.5 text-sm font-semibold text-left transition-colors hover:bg-[#f0eded]">
+                <span className="material-symbols-outlined text-base">chat</span>
+                System Prompts
+              </Link>
             </div>
           </div>
 

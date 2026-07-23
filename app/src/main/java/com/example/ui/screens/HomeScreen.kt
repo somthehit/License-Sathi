@@ -41,6 +41,7 @@ fun HomeScreen(
   onNavigateToStudy: () -> Unit,
   onNavigateToPractice: () -> Unit,
   onNavigateToMock: () -> Unit,
+  onNavigateToEyeTest: () -> Unit = {},
   modifier: Modifier = Modifier
 ) {
   val userProg by viewModel.userProgress.collectAsState()

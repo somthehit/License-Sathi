@@ -9,10 +9,12 @@ const navItems = [
   { href: '/questions',     label: 'Question Bank', icon: 'dataset'    },
   { href: '/questions/sets',label: 'Question Sets', icon: 'folder_copy', indent: true },
   { href: '/study-library', label: 'Study Library', icon: 'menu_book'  },
+  { href: '/video-guides',  label: 'Video Guides',  icon: 'play_circle' },
   { href: '/users',         label: 'Users',         icon: 'group'      },
   { href: '/analytics',     label: 'Analytics',     icon: 'bar_chart'  },
   { href: '/notices',       label: 'Notices',       icon: 'campaign'   },
   { href: '/settings',      label: 'Settings',      icon: 'settings'   },
+  { href: '/admin/ask-expert/analytics', label: 'Ask Expert Analytics', icon: 'smart_toy', indent: false },
 ];
 
 export default function Sidebar() {

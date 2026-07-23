@@ -95,6 +95,19 @@ class LicenseSathiViewModel(application: Application) : AndroidViewModel(applica
   val roadSigns = repository.allRoadSigns.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
   val ruleArticles = repository.allRuleArticles.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
   val fines = repository.allFines.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+  val videoGuides = repository.allVideoGuides.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+  private val _activeVideo = MutableStateFlow<com.example.data.VideoGuide?>(null)
+  val activeVideo: StateFlow<com.example.data.VideoGuide?> = _activeVideo.asStateFlow()
+
+  fun playVideo(video: com.example.data.VideoGuide) {
+    _activeVideo.value = video
+  }
+
+  fun closeVideo() {
+    _activeVideo.value = null
+  }
+
   val attempts = repository.allAttempts.combine(repository.userProgressFlow) { allAttempts, progress ->
     if (progress != null && progress.isLoggedIn && !progress.email.isNullOrEmpty()) {
       allAttempts.filter { it.userEmail == progress.email }
@@ -472,49 +485,30 @@ class LicenseSathiViewModel(application: Application) : AndroidViewModel(applica
       _expertExplanation.value = null
       _expertError.value = null
 
-      val systemPrompt = """
-        You are a highly experienced and friendly Traffic Police Inspector and Transport Expert from Nepal. 
-        Your task is to simplify traffic rules, road signs, or fines for driving license aspirants.
-        Always explain in a professional yet extremely clear and supportive tone.
-        Include:
-        1. A simplified "In simple words" (सरल शब्दमा) explanation.
-        2. A real-life scenario or practical example of how this applies on Nepalese roads.
-        3. A critical safety tip or warning.
-        Keep the response well-formatted using standard Markdown (bullet points, bold text, etc.).
-        You MUST respond entirely in the requested language: ${if (lang == "np") "Nepali (नेपाली)" else "English"}.
-      """.trimIndent()
-
-      val userPrompt = """
-        Item Type: $type
-        Title/Subject: $title
-        Original content or description: $content
-        
-        Please provide a simplified explanation and a practical example in ${if (lang == "np") "Nepali (नेपाली)" else "English"}.
-      """.trimIndent()
-
       try {
-        val apiKey = BuildConfig.GEMINI_API_KEY
-        if (apiKey.isEmpty() || apiKey == "MY_GEMINI_API_KEY") {
-          throw Exception(
-            if (lang == "np") {
-              "जेमिनी एपीआई कुञ्जी (GEMINI_API_KEY) सेट गरिएको छैन। कृपया यसलाई एआई स्टुडियोको सेक्रेट्स (Secrets) प्यानलमा कन्फिगर गर्नुहोस्।"
-            } else {
-              "Gemini API key is not configured. Please set GEMINI_API_KEY in the Secrets panel in AI Studio."
-            }
-          )
-        }
+        val userProgress = repository.getUserProgressDirect()
+        val userId = userProgress?.email ?: "anonymous_user"
+        
+        // Build the prompt just like before, but send it to our backend
+        val userPrompt = """
+          Item Type: $type
+          Title/Subject: $title
+          Original content or description: $content
+          
+          Please provide a simplified explanation and a practical example in ${if (lang == "np") "Nepali (नेपाली)" else "English"}.
+        """.trimIndent()
 
-        val request = GenerateContentRequest(
-          contents = listOf(Content(parts = listOf(Part(text = userPrompt)))),
-          systemInstruction = Content(parts = listOf(Part(text = systemPrompt))),
-          generationConfig = GenerationConfig(temperature = 0.7f)
+        val request = AskExpertRequest(
+          userId = userId,
+          question = userPrompt,
+          category = type.lowercase(), // e.g. "traffic rules" -> "traffic rules"
+          topicId = title
         )
 
-        val response = RetrofitGeminiClient.service.generateContent(apiKey, request)
-        val textResult = response.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
-
-        if (textResult != null) {
-          _expertExplanation.value = textResult
+        val response = RetrofitAskExpertClient.service.askExpert(request)
+        
+        if (response.answer.isNotEmpty()) {
+          _expertExplanation.value = response.answer
         } else {
           _expertError.value = if (lang == "np") {
             "विज्ञबाट कुनै प्रतिक्रिया प्राप्त भएन। कृपया पुनः प्रयास गर्नुहोस्।"

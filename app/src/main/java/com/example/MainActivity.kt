@@ -64,10 +64,16 @@ class MainActivity : ComponentActivity() {
           val quizState by viewModel.quizState.collectAsState()
           val showPracticeSetup by viewModel.showPracticeSetup.collectAsState()
           val mockState by viewModel.mockState.collectAsState()
+          val activeVideo by viewModel.activeVideo.collectAsState()
+          var showEyeTest by remember { mutableStateOf(false) }
 
           // Handle physical/system back button presses
-          androidx.activity.compose.BackHandler(enabled = activeTab != "home" || quizState != null || showPracticeSetup || mockState != null) {
-              if (quizState != null || showPracticeSetup) {
+          androidx.activity.compose.BackHandler(enabled = activeTab != "home" || quizState != null || showPracticeSetup || mockState != null || activeVideo != null || showEyeTest) {
+              if (activeVideo != null) {
+                  viewModel.closeVideo()
+              } else if (showEyeTest) {
+                  showEyeTest = false
+              } else if (quizState != null || showPracticeSetup) {
                   viewModel.exitPracticeSetup()
                   viewModel.closeQuiz()
                   activeTab = "home"
@@ -80,7 +86,7 @@ class MainActivity : ComponentActivity() {
           }
 
           // Hide bottom bar if a timed quiz or mock exam is actively running (to focus user attention)
-          val hideBottomBar = quizState != null || showPracticeSetup || mockState != null
+          val hideBottomBar = quizState != null || showPracticeSetup || mockState != null || activeVideo != null || showEyeTest
 
           Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -167,6 +173,14 @@ class MainActivity : ComponentActivity() {
             ) {
               // Priority Screens overlay
               when {
+                activeVideo != null -> {
+                  com.example.ui.screens.VideoPlayerScreen(
+                    videoUrl = activeVideo!!.videoUrl,
+                    title = activeVideo!!.getTitle(lang),
+                    onNavigateBack = { viewModel.closeVideo() }
+                  )
+                }
+
                 quizState != null || showPracticeSetup -> {
                   PracticeScreen(
                     viewModel = viewModel,
@@ -185,6 +199,13 @@ class MainActivity : ComponentActivity() {
                   )
                 }
 
+                showEyeTest -> {
+                  EyeTestScreen(
+                    viewModel = viewModel,
+                    onNavigateBack = { showEyeTest = false }
+                  )
+                }
+
                 else -> {
                   // Standard bottom-nav tab switching
                   when (activeTab) {
@@ -192,10 +213,11 @@ class MainActivity : ComponentActivity() {
                       viewModel = viewModel,
                       onNavigateToStudy = { activeTab = "study" },
                       onNavigateToPractice = { viewModel.enterPracticeSetup() },
-                      onNavigateToMock = { viewModel.startMockExam() }
+                      onNavigateToMock = { viewModel.startMockExam() },
+                      onNavigateToEyeTest = { showEyeTest = true }
                     )
 
-                    "study" -> StudyScreen(viewModel = viewModel)
+                    "study" -> StudyScreen(viewModel = viewModel, onNavigateToEyeTest = { showEyeTest = true })
 
                     "progress" -> ProgressScreen(viewModel = viewModel)
 

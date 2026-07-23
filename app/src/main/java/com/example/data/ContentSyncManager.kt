@@ -26,8 +26,8 @@ class ContentSyncManager(
         private const val PREFS_NAME = "content_sync_prefs"
         private const val KEY_LAST_SYNC = "last_content_sync_ts"
 
-        /** Minimum gap between automatic syncs (1 hour). */
-        private const val SYNC_INTERVAL_MS = 60 * 60 * 1000L
+        /** Minimum gap between automatic syncs (0 to always sync on launch). */
+        private const val SYNC_INTERVAL_MS = 0L
     }
 
     private val prefs by lazy {
@@ -84,11 +84,21 @@ class ContentSyncManager(
             Log.i(TAG, "Upserted ${batch.fines.size} fines into Room")
         }
 
+        // ── 3. Video Guides ──────────────────────────────────────────────────
+        val videoGuides = FirestoreContentService.fetchVideoGuides()
+        if (videoGuides.isNotEmpty()) {
+            dao.insertVideoGuides(videoGuides)
+            Log.i(TAG, "Upserted ${videoGuides.size} video guides into Room")
+        } else {
+            Log.w(TAG, "No video guides returned from Firestore – keeping local data")
+        }
+
         // Only stamp the timestamp if at least some data arrived (partial success is fine)
         val anyData = questions.isNotEmpty() ||
             batch.roadSigns.isNotEmpty() ||
             batch.ruleArticles.isNotEmpty() ||
-            batch.fines.isNotEmpty()
+            batch.fines.isNotEmpty() ||
+            videoGuides.isNotEmpty()
 
         if (anyData) markSynced()
 

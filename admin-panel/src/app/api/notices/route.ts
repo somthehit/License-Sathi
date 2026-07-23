@@ -24,9 +24,13 @@ export async function GET(req: NextRequest) {
     const page     = Math.max(1, Number(searchParams.get('page')     ?? 1));
     const pageSize = Math.min(100, Math.max(1, Number(searchParams.get('pageSize') ?? 10)));
 
-    let query: FirebaseFirestore.Query = adminDb.collection(COL).orderBy('createdAt', 'desc');
+    let query: FirebaseFirestore.Query = adminDb.collection(COL);
+    const hasFilter = (status && status !== 'All') || (type && type !== 'All');
+
     if (status && status !== 'All') query = query.where('status', '==', status);
     if (type   && type   !== 'All') query = query.where('type',   '==', type);
+
+    if (!hasFilter) query = query.orderBy('createdAt', 'desc');
 
     const totalSnap = await query.count().get();
     const total = totalSnap.data().count;

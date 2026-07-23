@@ -51,7 +51,7 @@ export default function SetsPage() {
       if (!res.ok) throw new Error('Failed');
       const data = await res.json();
       setSets(data.items ?? []);
-    } catch { showToast('Failed to load sets', false); }
+    } catch (e) { showToast('Failed to load sets', false); }
     finally { setLoading(false); }
   }, []);
 
@@ -85,7 +85,7 @@ export default function SetsPage() {
       showToast(editSet ? 'Set updated' : 'Set created');
       setModalOpen(false);
       load();
-    } catch { showToast('Error occurred', false); }
+    } catch (e) { showToast('Error occurred', false); }
     finally { setSaving(false); }
   }
 
@@ -97,7 +97,7 @@ export default function SetsPage() {
       showToast('Set deleted');
       setDeleteConfirm(null);
       load();
-    } catch { showToast('Failed to delete', false); }
+    } catch (e) { showToast('Failed to delete', false); }
     finally { setDeleting(null); }
   }
 

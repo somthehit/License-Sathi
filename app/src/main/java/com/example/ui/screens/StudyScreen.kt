@@ -49,6 +49,7 @@ import kotlin.math.sin
 @Composable
 fun StudyScreen(
   viewModel: LicenseSathiViewModel,
+  onNavigateToEyeTest: () -> Unit = {},
   modifier: Modifier = Modifier
 ) {
   val lang by viewModel.activeLanguage.collectAsState()
@@ -65,9 +66,9 @@ fun StudyScreen(
 
   var selectedTab by remember { mutableStateOf(0) }
   val tabTitles = if (lang == "np") {
-    listOf("सडक नियम", "सङ्केतहरू", "जरिवाना", "कानून", "सवारी ज्ञान", "मनपर्ने")
+    listOf("सडक नियम", "सङ्केतहरू", "जरिवाना", "कानून", "सवारी ज्ञान", "भिडियोहरू", "मनपर्ने")
   } else {
-    listOf("Rules", "Signs", "Fines", "Law", "Vehicle", "Favorites")
+    listOf("Rules", "Signs", "Fines", "Law", "Vehicle", "Videos", "Favorites")
   }
 
   var searchQuery by remember { mutableStateOf("") }
@@ -301,6 +302,49 @@ fun StudyScreen(
       singleLine = true
     )
 
+    // 1.7 Eye Test Banner
+    Card(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp, vertical = 8.dp)
+        .clickable { onNavigateToEyeTest() },
+      shape = RoundedCornerShape(16.dp),
+      colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+      Row(
+        modifier = Modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Icon(
+          imageVector = Icons.Default.Visibility,
+          contentDescription = "Eye Test",
+          tint = MaterialTheme.colorScheme.onPrimaryContainer,
+          modifier = Modifier.size(32.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column {
+          Text(
+            text = if (lang == "np") "आँखा परीक्षण (Eye Test)" else "Color Blindness Test",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
+          )
+          Text(
+            text = if (lang == "np") "लाइसेन्सको लागि आवश्यक" else "Required for License",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+          )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Icon(
+          imageVector = Icons.Default.ArrowForwardIos,
+          contentDescription = "Start",
+          tint = MaterialTheme.colorScheme.onPrimaryContainer,
+          modifier = Modifier.size(16.dp)
+        )
+      }
+    }
+
     if (searchQuery.isNotEmpty()) {
       val count = when (selectedTab) {
         0 -> filteredRules.size
@@ -378,7 +422,14 @@ fun StudyScreen(
             viewModel.askExpert(type, title, content, lang)
           }
         )
-        5 -> FavoritesTab(
+        5 -> VideosTab(
+          videos = viewModel.videoGuides.collectAsState().value,
+          lang = lang,
+          onVideoClick = { video -> 
+            viewModel.playVideo(video)
+          }
+        )
+        6 -> FavoritesTab(
           questions = filteredQuestions,
           signs = starredSigns,
           rules = starredRules,
@@ -1836,6 +1887,65 @@ fun FavoritesTab(
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@Composable
+fun VideosTab(
+  videos: List<com.example.data.VideoGuide>,
+  lang: String,
+  onVideoClick: (com.example.data.VideoGuide) -> Unit
+) {
+  LazyColumn(
+    modifier = Modifier.fillMaxSize(),
+    contentPadding = PaddingValues(16.dp),
+    verticalArrangement = Arrangement.spacedBy(12.dp)
+  ) {
+    if (videos.isEmpty()) {
+      item {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+          Text("No videos found", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+      }
+    } else {
+      items(videos) { video ->
+        Card(
+          modifier = Modifier.fillMaxWidth().clickable { onVideoClick(video) },
+          colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+          shape = RoundedCornerShape(12.dp)
+        ) {
+          Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+              text = video.getTitle(lang),
+              style = MaterialTheme.typography.titleMedium,
+              fontWeight = FontWeight.Bold,
+              color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+              text = video.getDescription(lang),
+              style = MaterialTheme.typography.bodyMedium,
+              color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+              Icon(
+                imageVector = Icons.Default.PlayCircle,
+                contentDescription = "Play",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(24.dp)
+              )
+              Spacer(modifier = Modifier.width(8.dp))
+              Text(
+                text = "${video.durationSeconds / 60}m ${video.durationSeconds % 60}s",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+              )
             }
           }
         }

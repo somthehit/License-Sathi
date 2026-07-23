@@ -280,13 +280,13 @@ object FirestoreContentService {
             RoadSign(
                 id             = docId.hashCode().let { if (it < 0) -it else it },
                 type           = (data["type"] as? String) ?: "Informational",
-                nameNp         = (data["nameNp"] as? String) ?: (data["title"] as? String) ?: "",
+                nameNp         = (data["nameNp"] as? String) ?: (data["titleNp"] as? String) ?: (data["title"] as? String) ?: "",
                 nameEn         = (data["nameEn"] as? String) ?: (data["titleEn"] as? String) ?: "",
-                descriptionNp  = (data["descriptionNp"] as? String) ?: (data["description"] as? String) ?: "",
-                descriptionEn  = (data["descriptionEn"] as? String) ?: "",
+                descriptionNp  = (data["descriptionNp"] as? String) ?: (data["descNp"] as? String) ?: (data["description"] as? String) ?: "",
+                descriptionEn  = (data["descriptionEn"] as? String) ?: (data["descEn"] as? String) ?: "",
                 memoryTipNp    = (data["memoryTipNp"] as? String) ?: "",
                 memoryTipEn    = (data["memoryTipEn"] as? String) ?: "",
-                iconName       = (data["iconName"] as? String) ?: "sign_info"
+                iconName       = (data["iconName"] as? String) ?: (data["imageUrl"] as? String) ?: "sign_info"
             )
         } catch (e: Exception) {
             Log.w(TAG, "Skipping malformed road sign doc $docId: ${e.message}")
@@ -324,6 +324,59 @@ object FirestoreContentService {
             )
         } catch (e: Exception) {
             Log.w(TAG, "Skipping malformed fine doc $docId: ${e.message}")
+            null
+        }
+    }
+
+    // ── Video Guides ──────────────────────────────────────────────────────────
+
+    /**
+     * Fetches all Published video guides from Firestore.
+     * Only returns guides where isPublished == true so drafts stay admin-side only.
+     */
+    suspend fun fetchVideoGuides(): List<VideoGuide> {
+        val firestore = db ?: run {
+            Log.w(TAG, "Firestore not available – skipping video guides sync")
+            return emptyList()
+        }
+        return try {
+            val snapshot = firestore.collection("video_guides")
+                .whereEqualTo("isPublished", true)
+                .get()
+                .await()
+
+            snapshot.documents.mapNotNull { doc -> mapDocToVideoGuide(doc.id, doc.data) }
+                .also { Log.d(TAG, "Fetched ${it.size} video guides from Firestore") }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to fetch video guides", e)
+            emptyList()
+        }
+    }
+
+    private fun mapDocToVideoGuide(docId: String, data: Map<String, Any?>?): VideoGuide? {
+        if (data == null) return null
+        return try {
+            val durationRaw = data["durationSeconds"]
+            val duration = when (durationRaw) {
+                is Long   -> durationRaw.toInt()
+                is Int    -> durationRaw
+                is Double -> durationRaw.toInt()
+                is String -> durationRaw.toIntOrNull() ?: 0
+                else      -> 0
+            }
+            VideoGuide(
+                id              = docId.hashCode().let { if (it < 0) -it else it },
+                titleEn         = (data["titleEn"] as? String) ?: "",
+                titleNp         = (data["titleNp"] as? String) ?: "",
+                descriptionEn   = (data["descriptionEn"] as? String) ?: "",
+                descriptionNp   = (data["descriptionNp"] as? String) ?: "",
+                videoUrl        = (data["videoUrl"] as? String) ?: "",
+                durationSeconds = duration,
+                category        = (data["category"] as? String) ?: "ALL",
+                isPublished     = (data["isPublished"] as? Boolean) ?: true
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "Skipping malformed video guide doc $docId: ${e.message}")
             null
         }
     }
