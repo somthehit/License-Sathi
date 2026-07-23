@@ -8,4 +8,5 @@ export const COLLECTIONS = {
   ASK_EXPERT_QUESTIONS: 'ask_expert_questions',
   ASK_EXPERT_FEEDBACK: 'ask_expert_feedback',
   AD_REWARD_LOGS: 'ad_reward_logs',
+  CONTACT_MESSAGES: 'contact_messages',
 };
