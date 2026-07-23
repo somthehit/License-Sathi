@@ -16,7 +16,7 @@ function getCredential() {
 
   const keyPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
   if (keyPath && keyPath.trim()) {
-    const absPath = path.resolve(process.cwd(), keyPath.trim());
+    const absPath = path.resolve(/*turbopackIgnore: true*/ process.cwd(), keyPath.trim());
     try {
       const content = fs.readFileSync(absPath, 'utf-8');
       const parsed = JSON.parse(content) as ServiceAccount;
