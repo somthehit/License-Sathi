@@ -13,12 +13,13 @@ async function requireAdmin(req: NextRequest) {
 }
 
 // GET /api/video-guides/[id]
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const admin = await requireAdmin(req);
     if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const snap = await adminDb.collection(COL).doc(params.id).get();
+    const snap = await adminDb.collection(COL).doc(id).get();
     if (!snap.exists) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
     return NextResponse.json({ id: snap.id, ...snap.data() });
@@ -28,15 +29,16 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 // PUT /api/video-guides/[id]
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const admin = await requireAdmin(req);
     if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const body = await req.json();
     const { titleEn, titleNp, descriptionEn, descriptionNp, videoUrl, durationSeconds, category, status } = body;
 
-    await adminDb.collection(COL).doc(params.id).update({
+    await adminDb.collection(COL).doc(id).update({
       titleEn:          titleEn?.trim(),
       titleNp:          (titleNp ?? '').trim(),
       descriptionEn:    (descriptionEn ?? '').trim(),
@@ -49,19 +51,20 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       updatedAt:        FieldValue.serverTimestamp(),
     });
 
-    return NextResponse.json({ id: params.id, success: true });
+    return NextResponse.json({ id, success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
 // DELETE /api/video-guides/[id]
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const admin = await requireAdmin(req);
     if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    await adminDb.collection(COL).doc(params.id).delete();
+    await adminDb.collection(COL).doc(id).delete();
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
