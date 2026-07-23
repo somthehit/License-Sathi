@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import Link from "next/link";
+import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,7 +31,9 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-slate-50 text-slate-900">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <footer className="mt-auto bg-white border-t border-slate-200 py-8">
           <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
             <p>&copy; {new Date().getFullYear()} License Sathi. All rights reserved.</p>
